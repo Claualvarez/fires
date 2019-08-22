@@ -21,22 +21,19 @@
 
    2.1 Extract the compressed package
       
-       $ unzip FiRESV0.zip
+       $ unzip fires-master.zip
 
    2.2 Modify paths to the fires_v0.pl script in fires
 
-       path_to_fires='/path/to/FiRESv0/scripts'
+       path_to_fires='/path/to/fires-master/scripts'
 
        And then:
 
        $ chmod 555 fires
 
    2.2 Define the paths to your DSSP and Click directories at 
-   the top of the fires_v0.pl scripts
-
-       $ cd scripts
-
-   modify the following lines in fires_v0.pl to include the path to DSSP and Click:
+   the top of the ./scripts/fires_v0.pl script to include the path to DSSP 
+   and the path to Click:
    
    	my $path_to_click="/path/to/click";
    	my $path_to_dssp="/path/to/dssp";
