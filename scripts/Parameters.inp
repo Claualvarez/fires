@@ -1,0 +1,17 @@
+typeAtom=" CA "
+n_clique=7
+d_Thr=10
+depth_Thr=1
+buried_Thr=8
+exposed_Thr=30
+SS_Thr=2
+SA_Thr=1
+align_Thr=1
+rmsd_cutoff=3.5
+rmsd_cutoff_3body=0.15
+rmsd_cutoff_4body=0.30
+rmsd_cutoff_5body=0.60
+rmsd_cutoff_6body=0.90
+rmsd_cutoff_7body=1.50
+rmsd_cutoff_8body=1.80
+rmsd_cutoff_9body=2.10
