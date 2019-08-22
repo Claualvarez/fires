@@ -46,6 +46,7 @@
 3) Test
 
    $ ./fires 1wm5.pdb A
+   
    $ ./fires 3e3x.pdb A
 
 4) FiRES results
