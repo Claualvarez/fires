@@ -36,18 +36,17 @@
 
        $ cd scripts
 
-       # modify:
-       # my $path_to_click="/path/to/click";
-       # my $path_to_dssp="/path/to/dssp";
+   modify:
+   my $path_to_click="/path/to/click";
+   my $path_to_dssp="/path/to/dssp";
 
        $ chmod 555 *pl
 
    
 3) Test
 
-   $ perl ./fires 1wm5.pdb A
-
-   $ perl ./fires 3e3x.pdb A
+       $ perl ./fires 1wm5.pdb A
+       $ perl ./fires 3e3x.pdb A
 
 4) FiRES results
 
