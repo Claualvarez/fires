@@ -262,7 +262,7 @@ sub prepare_pdb{
 		}
 	}
 	close OUT ;
-	system("$path_to_dssp/dssp $outfile $dssp");
+	system("$path_to_dssp/dssp $outfile > $dssp");
 }
 
 ######
