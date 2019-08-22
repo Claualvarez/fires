@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-path_to_fires='/home/claudia/Projects/fires/versions/fires_versions/FiRESv0/scripts'
+path_to_fires='/home/path/to/FiRESv0/scripts'
 
 ########################################################################################
 
