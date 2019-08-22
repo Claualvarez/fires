@@ -42,7 +42,7 @@
    
    Then:
    
-       $ chmod 555 *pl
+       $ chmod ./scripts/555  *.pl
 
    
 3) Test
