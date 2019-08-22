@@ -36,9 +36,10 @@
 
        $ cd scripts
 
-   modify:\n
-   my $path_to_click="/path/to/click"; \n
-   my $path_to_dssp="/path/to/dssp"; \n
+   modify the following lines to include the path to DSSP and Click 
+   (make sure to type only the path but not the name of the program):
+   my $path_to_click="/path/to/click";
+   my $path_to_dssp="/path/to/dssp";
 
        $ chmod 555 *pl
 
