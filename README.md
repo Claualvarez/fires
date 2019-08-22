@@ -6,12 +6,16 @@
 
 1) Prerequisites
 
-   1.1 DSSP
+   1.1 the List::MoreUtils module
+   
+       $ cpanm List::MoreUtils
+   
+   1.2 DSSP
 
        $ sudo apt-get update
        $ sudo apt-get install dssp
 
-   1.2 Click
+   1.3 Click
 
        You can find tha standalone version of click here:
        http://cospi.iiserpune.ac.in/click/Download/Download.jsp
