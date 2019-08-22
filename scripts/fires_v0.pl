@@ -7,8 +7,8 @@
 
 # Please modify the followhing paths:
 
-my $path_to_click="~/Programs/click/Click_X86_64";
-my $path_to_dssp="/usr/bin";
+my $path_to_click="/path/to/click";
+my $path_to_dssp="/path/to/dssp";
 
 
 #########################################################################
