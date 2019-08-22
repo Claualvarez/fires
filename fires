@@ -1,0 +1,27 @@
+#!/bin/bash
+
+
+path_to_fires='/home/claudia/Projects/fires/versions/fires_versions/FiRESv0/scripts'
+
+########################################################################################
+
+pdb_target=$1
+chain=$2
+pdbid=`echo $pdb_target | awk -F'.' '{print $1}'`
+
+current=`pwd`
+dd=$(date '+%d-%b-%Y-%H-%M-%S')
+rr=$RANDOM
+wk=$dd"-"$rr"-"$pdb_target
+
+echo "FiRES: Find Repeated Elements in Structure"
+echo "Usage: ./fires <pdb file> <chain name>";
+echo "FiRES  is going to be running at : "$wk
+mkdir "$wk"
+cd "$wk"
+cp "$current"/"$pdb_target" .
+perl "$path_to_fires"/fires_v0.pl -pdb "$pdb_target" -c "$chain" -path $path_to_fires
+cp "$pdbid"* "$current"
+cd "$current"
+#echo "Removing folder : "$wk
+#rm -r "$wk"
