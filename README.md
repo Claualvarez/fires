@@ -36,9 +36,9 @@
 
        $ cd scripts
 
-   modify:
-   my $path_to_click="/path/to/click";
-   my $path_to_dssp="/path/to/dssp";
+   modify:\n
+   my $path_to_click="/path/to/click"; \n
+   my $path_to_dssp="/path/to/dssp"; \n
 
        $ chmod 555 *pl
 
