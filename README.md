@@ -35,7 +35,7 @@
 
        $ chmod 555 fires
 
-   2.2 Define the paths to your DSSP and Click directories at 
+   2.3 Define the paths to your DSSP and Click directories at 
    the top of the ./scripts/fires_v0.pl script to include the path to DSSP 
    and the path to Click:
    
