@@ -36,11 +36,15 @@
 
        $ cd scripts
 
-   modify the following lines to include the path to DSSP and Click 
-   (make sure to type only the path but not the name of the program):
-   my $path_to_click="/path/to/click";
-   my $path_to_dssp="/path/to/dssp";
+   modify the following lines in fires_v0.pl to include the path to DSSP and Click:
+   
+   	my $path_to_click="/path/to/click";
+   	my $path_to_dssp="/path/to/dssp";
 
+   (make sure to type only the path but not the name of the program)
+   
+   Then:
+   
        $ chmod 555 *pl
 
    
