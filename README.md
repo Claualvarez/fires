@@ -39,7 +39,7 @@ INSTRUCTIONS
    the top of the ./scripts/fires_v0.pl script to include the path to DSSP 
    and the path to Click:
    
-   	my $path_to_click="/path/to/click";
+        my $path_to_click="/path/to/click";
 	
        	my $path_to_dssp="/path/to/dssp";
 
