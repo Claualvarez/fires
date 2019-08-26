@@ -17,7 +17,7 @@ INSTRUCTIONS
 
    1.3 Click
 
-       You can find tha standalone version of click here:
+      You can find tha standalone version of click here:
        http://cospi.iiserpune.ac.in/click/Download/Download.jsp
 
 
@@ -29,7 +29,7 @@ INSTRUCTIONS
 
    2.2 Modify paths to the fires_v0.pl script in fires
 
-   path_to_fires='/path/to/fires-master/scripts'
+       path_to_fires='/path/to/fires-master/scripts'
 
    And then:
 
