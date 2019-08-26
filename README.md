@@ -29,9 +29,9 @@ INSTRUCTIONS
 
    2.2 Modify paths to the fires_v0.pl script in fires
 
-       path_to_fires='/path/to/fires-master/scripts'
+   path_to_fires='/path/to/fires-master/scripts'
 
-       And then:
+   And then:
 
        $ chmod 555 fires
 
