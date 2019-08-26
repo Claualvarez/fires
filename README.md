@@ -40,6 +40,7 @@ INSTRUCTIONS
    and the path to Click:
    
    	my $path_to_click="/path/to/click";
+	
    	my $path_to_dssp="/path/to/dssp";
 
    (make sure to type only the path but not the name of the program)
