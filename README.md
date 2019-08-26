@@ -2,11 +2,11 @@
 #   A computational method for the de novo identification of repeats    #
 
 
-            INSTRUCTIONS
+INSTRUCTIONS
 
 1) Prerequisites
 
-   1.1 the List::MoreUtils module
+   1.1 The List::MoreUtils module for perl
    
        $ cpanm List::MoreUtils
    
