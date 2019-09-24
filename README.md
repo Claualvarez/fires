@@ -6,7 +6,7 @@ INSTRUCTIONS
 
 1) Prerequisites
 
-   1.1 The List::MoreUtils module for perl
+   1.1 List::MoreUtils module for perl
    
        $ cpanm List::MoreUtils
    
