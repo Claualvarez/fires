@@ -16,9 +16,9 @@ dd=$(date '+%d-%b-%Y-%H-%M-%S')
 rr=$RANDOM
 wk=$dd"-"$rr"-"$pdb_target
 
-1>&2 echo "stdout FiRES: Find Repeated Elements in Structure"
-1>&2 echo "stdout Usage: ./fires <pdb file> <chain name>";
-1>&2 echo "stodut FiRES  is going to be running at : "$wk
+1>&2 echo "FiRES: Find Repeated Elements in Structure"
+1>&2 echo "Usage: ./fires <pdb file> <chain name>";
+1>&2 echo "FiRES  is going to be running at : "$wk
 
 mkdir "$wk"
 cd "$wk"
