@@ -31,22 +31,13 @@ INSTRUCTIONS
 
        path_to_fires='/path/to/fires-master/scripts'
 
-   And then:
-
-       $ chmod 555 fires
-
    2.3 Define the paths to your DSSP and Click directories at 
-   the top of the ./scripts/fires_v0.pl script to include the path to DSSP 
-   and the path to Click:
+   the top of the fires script
    
-        my $path_to_click="/path/to/click";
-        my $path_to_dssp="/path/to/dssp";
+        $path_to_click="/path/to/click";
+        $path_to_dssp="/path/to/dssp";
 
    (make sure to type only the path but not the name of the program)
-   
-   Then:
-   
-       $ chmod ./scripts/555  *.pl
 
    
 3) Test
