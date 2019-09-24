@@ -5,10 +5,9 @@
 #									#
 #########################################################################
 
-# Please modify the followhing paths:
 
-my $path_to_click="/path/to/click";
-my $path_to_dssp="/path/to/dssp";
+my $path_to_click="/usr/bin/Click_X86_64";
+my $path_to_dssp="/usr/binp";
 
 
 #########################################################################
@@ -53,34 +52,35 @@ my $directory ;
 
 for (my $i = 0; $i < @ARGV ; $i++)       {$options    .= " $ARGV[$i] " }
 
-if ($options =~ / -pdb\s+(\S+) /)        {$pdb         = $1}
-if ($options =~ / -dssp\s+(\S+) /)       {$dssp        = $1}
-if ($options =~ / -c\s+(\S+) /)          {$chaini      = $1}
-if ($options =~ / -b\s+(\S+) /)          {$threshold   = $1}
-if ($options =~ / -c\s+(\S+) /)          {$chaini      = $1}
-if ($options =~ / -cu\s+(\S+) /)         {$chaini      = uc $1}
-if ($options =~ / -d\s+(\S+) /)          {$separation  = $1}
-if ($options =~ / -dssp\s+(\S+) /)       {$dssp	       = $1}
-if ($options =~ / -ext\s+(\S+) /)        {$reward      = $1}
-if ($options =~ / -i\s+(\S+) /)          {$rounds      = $1}
-if ($options =~ / -pdb\s+(\S+) /)        {$pdb         = $1}
-if ($options =~ / -max\s+(\S+) /)        {$max         = $1}
-if ($options =~ / -min\s+(\S+) /)        {$min         = $1}
-if ($options =~ / -ma\s+(\S+) /)         {$min_aa = $1}
-if ($options =~ / -mma\s+(\S+) /)        {$mma = $1}
-if ($options =~ / -o\s+(\S+) /)          {$overlap     = $1}
-if ($options =~ / -n\s+(\S+) /)          {$coverage    = $1}
-if ($options =~ / -p\s+(\S+) /)          {$gap_penalty = $1}
-if ($options =~ / -R\s+(\S+) /)          {$redundancy  = $1}
-if ($options =~ / -S\s+(\S+) /)          {$sampling    = $1}
-if ($options =~ / -gap\s+(\S+) /)        {$gap         = $1}
-if ($options =~ / -ss\s+(\S+) /)         {$ss          = $1}
-if ($options =~ / -f\s+(\S+)\s?/)        {$pdbcode     = $1}
-if ($options =~ / -rmsd\s+(\S+)\s?/)     {$rmsd        = $1}
-if ($options =~ / -input\s+(\S+)\s?/)    {$input       = $1}
-if ($options =~ / -force\s+(\S+)\s?/)    {$force       = $1}
-if ($options =~ / -path\s+(\S+)\s?/)     {$path_to_fires       = $1}
-
+if ($options =~ / -pdb\s+(\S+) /)        {$pdb           = $1}
+if ($options =~ / -dssp\s+(\S+) /)       {$dssp          = $1}
+if ($options =~ / -c\s+(\S+) /)          {$chaini        = $1}
+if ($options =~ / -b\s+(\S+) /)          {$threshold     = $1}
+if ($options =~ / -c\s+(\S+) /)          {$chaini        = $1}
+if ($options =~ / -cu\s+(\S+) /)         {$chaini        = uc $1}
+if ($options =~ / -d\s+(\S+) /)          {$separation    = $1}
+if ($options =~ / -dssp\s+(\S+) /)       {$dssp	         = $1}
+if ($options =~ / -ext\s+(\S+) /)        {$reward        = $1}
+if ($options =~ / -i\s+(\S+) /)          {$rounds        = $1}
+if ($options =~ / -pdb\s+(\S+) /)        {$pdb           = $1}
+if ($options =~ / -max\s+(\S+) /)        {$max           = $1}
+if ($options =~ / -min\s+(\S+) /)        {$min           = $1}
+if ($options =~ / -ma\s+(\S+) /)         {$min_aa        = $1}
+if ($options =~ / -mma\s+(\S+) /)        {$mma           = $1}
+if ($options =~ / -o\s+(\S+) /)          {$overlap       = $1}
+if ($options =~ / -n\s+(\S+) /)          {$coverage      = $1}
+if ($options =~ / -p\s+(\S+) /)          {$gap_penalty   = $1}
+if ($options =~ / -R\s+(\S+) /)          {$redundancy    = $1}
+if ($options =~ / -S\s+(\S+) /)          {$sampling      = $1}
+if ($options =~ / -gap\s+(\S+) /)        {$gap           = $1}
+if ($options =~ / -ss\s+(\S+) /)         {$ss            = $1}
+if ($options =~ / -f\s+(\S+)\s?/)        {$pdbcode       = $1}
+if ($options =~ / -rmsd\s+(\S+)\s?/)     {$rmsd          = $1}
+if ($options =~ / -input\s+(\S+)\s?/)    {$input         = $1}
+if ($options =~ / -force\s+(\S+)\s?/)    {$force         = $1}
+if ($options =~ / -path\s+(\S+)\s?/)     {$path_to_fires = $1}
+if ($options =~ / -pdssp\s+(\S+)\s?/)    {$path_to_dssp  = $1}
+if ($options =~ / -pclick\s+(\S+)\s?/)   {$path_to_click = $1}
 
 
 ######################################################################
