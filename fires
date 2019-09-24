@@ -3,7 +3,7 @@
 
 path_to_fires='/home/path/to/fires-master/scripts'
 path_to_click='/home/path/to/Click_X86_64'
-
+path_to_dssp='/home/path/to_dssp'                      # e.g. /usr/bin
 
 ########################################################################################
 
@@ -22,7 +22,7 @@ echo "FiRES  is going to be running at : "$wk
 mkdir "$wk"
 cd "$wk"
 cp "$current"/"$pdb_target" .
-perl "$path_to_fires"/fires_v0.pl -pdb "$pdb_target" -c "$chain" -path $path_to_fires -click $path_to_click -dssp 
+perl "$path_to_fires"/fires_v0.pl -pdb "$pdb_target" -c "$chain" -path $path_to_fires -pclick $path_to_click -pdssp $path_to_dssp
 cp "$pdbid"* "$current"
 cd "$current"
 echo "Removing folder : "$wk
