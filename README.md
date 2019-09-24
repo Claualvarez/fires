@@ -28,7 +28,7 @@ INSTRUCTIONS
        $ unzip fires-master.zip
        $ cd fires-master
 
-   2.2 Modify paths to the fires scripts in the fires controller script:
+   2.2 Modify paths to the scripts' directory in the fires controller script:
 
        path_to_fires='/path/to/fires-master/scripts'
 
