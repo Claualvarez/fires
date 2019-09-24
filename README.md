@@ -26,13 +26,14 @@ INSTRUCTIONS
    2.1 Extract the compressed package
       
        $ unzip fires-master.zip
+       $ cd fires-master
 
-   2.2 Modify paths to the fires_v0.pl script in fires
+   2.2 Modify paths to the fires scripts in the fires controller script:
 
        path_to_fires='/path/to/fires-master/scripts'
 
    2.3 Define the paths to your DSSP and Click directories at 
-   the top of the fires script
+   the top of the fires controller script:
    
         $path_to_click="/path/to/click";
         $path_to_dssp="/path/to/dssp";
@@ -42,8 +43,8 @@ INSTRUCTIONS
    
 3) Test
 
-       $ perl ./fires 1wm5.pdb A
-       $ perl ./fires 3e3x.pdb A
+       $ bash ./fires 1wm5.pdb A
+       $ bash ./fires 3e3x.pdb A
 
 4) FiRES results
 
