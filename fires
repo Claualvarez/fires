@@ -16,9 +16,9 @@ dd=$(date '+%d-%b-%Y-%H-%M-%S')
 rr=$RANDOM
 wk=$dd"-"$rr"-"$pdb_target
 
-echo "FiRES: Find Repeated Elements in Structure"
-echo "Usage: ./fires <pdb file> <chain name>";
-echo "FiRES  is going to be running at : "$wk
+1>&2 echo "stdout FiRES: Find Repeated Elements in Structure"
+1>&2 echo "stdout Usage: ./fires <pdb file> <chain name>";
+1>&2 echo "stodut FiRES  is going to be running at : "$wk
 
 mkdir "$wk"
 cd "$wk"
@@ -26,5 +26,5 @@ cp "$current"/"$pdb_target" .
 perl "$path_to_fires"/fires_v0.pl -pdb "$pdb_target" -c "$chain" -path $path_to_fires -pclick $path_to_click -pdssp $path_to_dssp
 cp "$pdbid"* "$current"
 cd "$current"
-echo "Removing folder : "$wk
+1>&2 echo "Removing folder : "$wk
 rm -r "$wk"
