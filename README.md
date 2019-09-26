@@ -2,7 +2,8 @@
 #   A computational method for the de novo identification of repeats    #
 
 
-INSTRUCTIONS
+INSTRUCTIONS 
+(Linux)
 
 1) Prerequisites
 
