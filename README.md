@@ -29,7 +29,7 @@ INSTRUCTIONS
        http://cospi.iiserpune.ac.in/click/Download/Download.jsp
 
 
-2) Installation
+2) Setup
 
    2.1 Extract the compressed package
       
