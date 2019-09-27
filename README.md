@@ -12,7 +12,9 @@ INSTRUCTIONS
        $ cpanm List::MoreUtils
    
    1.2 DSSP
-
+   
+     You can find the instructions here: https://swift.cmbi.umcn.nl/gv/dssp/
+     or you can try:
        $ sudo apt-get update
        $ sudo apt-get install dssp
 
