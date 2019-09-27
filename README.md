@@ -25,7 +25,7 @@ INSTRUCTIONS
 
    1.3 Click
 
-      Standalone version of click:
+      The standalone version of click is available here:
        http://cospi.iiserpune.ac.in/click/Download/Download.jsp
 
 
