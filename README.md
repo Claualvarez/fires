@@ -13,8 +13,8 @@ INSTRUCTIONS
    
    1.2 DSSP
    
-     You can find the instructions here: https://swift.cmbi.umcn.nl/gv/dssp/
-     or you can try a package manager:
+     The instructions are available here: https://swift.cmbi.umcn.nl/gv/dssp/
+     or try a package manager:
  
        $ sudo apt-get update
        $ sudo apt-get install dssp
@@ -25,7 +25,7 @@ INSTRUCTIONS
 
    1.3 Click
 
-      You can find tha standalone version of click here:
+      Standalone version of click:
        http://cospi.iiserpune.ac.in/click/Download/Download.jsp
 
 
