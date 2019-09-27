@@ -14,6 +14,7 @@ INSTRUCTIONS
    1.2 DSSP
    
      The instructions are available here: https://swift.cmbi.umcn.nl/gv/dssp/
+     
      or try a package manager:
  
        $ sudo apt-get update
