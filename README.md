@@ -1,5 +1,5 @@
 #               FiRES: Find Repeated Elements in Structure              #
-#   A computational method for the de novo identification of repeats    #
+#   A computational method for de novo identification of repeats    #
 
 
 INSTRUCTIONS 
