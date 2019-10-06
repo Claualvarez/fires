@@ -227,7 +227,7 @@ sub prepare_pdb{
 	open OUT, ">$outfile";
 	while (my $line = <IN>){
 		if ($line =~ /^ATOM\s+/){
-			$line =~ /(^ATOM.)(......)(.....)(.....)(..)(.*)/;
+			$line =~ /(^ATOM.)(......)(.....)(....)(..)(.*)/;
 			my $head = $1 ;
 			my $nb   = $2 ;
 			my $atm  = $3 ;
@@ -246,7 +246,7 @@ sub prepare_pdb{
 				print  OUT  "$head";
 				printf OUT '%6s',$number;
 				print  OUT "$atm $aa";
-				printf OUT '%-2s', "A";
+				printf OUT '%2s', "A";
 				print  OUT "$inf\n";
 				$number ++;
 			}
@@ -254,7 +254,7 @@ sub prepare_pdb{
 				print  OUT "$head";
 				printf OUT '%6s',$number;
 				print  OUT "$atm$aa";
-				printf OUT '%-2s', "A";
+				printf OUT '%2s', "A";
 				print  OUT "$inf\n";
 				$number ++
 			}
