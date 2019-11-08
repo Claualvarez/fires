@@ -12,7 +12,7 @@ my $chain    ;
 
 for (my $i = 0; $i < @ARGV ; $i++) {$options .= " $ARGV[$i] " }
 if ($options =~ / -i\s+(\S+) /)    {$infile   = $1}
-if ($options =~ / -c\s+(\S+) /)    {$chain   = $1}
+if ($options =~ / -c\s+(\S+) /)    {$chain    = $1}
 chomp $infile ;
 
 open IN, "$infile" or die "ERROR APERTURA \n$!" ;
@@ -42,6 +42,7 @@ for (my $i = 0 ; $i < 2000 ; $i ++){
 	for (my $j = 0 ; $j < 2000 ; $j ++){
 		my $check_1 = "$i-$j";
 		if ($KEEPER{$check_1} =~ /\S+/){			
+#			print "$KEEPER{$check_1}\n";
 			my $flag             = pointer($check_1);
 			my @ENDING           = split (/\t/, $KEEPER{$check_1});
 			my @LINE             = ($check_1,@ENDING);
@@ -112,26 +113,51 @@ foreach my $line (sort {$a <=> $b} @LINESF){
 
 #@RESULTS = sort {$a <=> $b} @RESULTS;
 
+sub doublecheck {
+	my @summary = "";
+	my @ELEMS = @_;
+	my $flag ;
+	foreach my $elem (@ELEMS){
+                my ($ini,$fin) = split ("-",$elem);
+                for (my $i=$ini+1; $i<$fin+1; $i++) { $summary[$i] ++ }
+        }
+	foreach my $elem (keys @ELEMS){
+
+                my ($ref1a,$ref2a) = split("-",$ELEMS[$elem]);
+                my $mid_a = floor (($ref1a + $ref2a) / 2);
+                if ($summary[$ref1a]>=2 or $summary[$ref2a] >= 2 or $summary[$mid_a]>=2){
+                        $flag="internal_problem";
+                }
+        }
+	return ($flag);
+}
+
 my ($rank,$overall_rank);
 if ($#RESULTS >= 0){open OUTTAB, ">$infile.out"}
-#else{print "No repeated elements found!\n";}
-else{print "\tNo repeats found!\n";}
 
+else{print "\tNo repeats found!\n";}
+my $message ;
 foreach my $results (sort {$b <=> $a} @RESULTS){
 	my $flag = "pass";
-	$results =~ /\[ (.*) \]/;
+	$results =~ /Pair\(s\): \[ (.*) \]/;
 	my @ELEM = split ("; ",$1);
 	foreach my $elem (@ELEM){
 		my ($ini,$fin) = split ("-",$elem);
-		for (my $i=$ini+1; $i<$fin+1; $i++) { $SUMMARY[$i] ++ }
+		
+		$message = doublecheck (@ELEM);
+	
+		for (my $i=$ini+1; $i<$fin+1; $i++) {$SUMMARY[$i] ++}
 	}
+	if ($message eq "internal_problem"){@SUMMARY = ""; $flag ="no"}
 	foreach my $elem (keys @ELEM){
 		#print "$results\n";
 		my ($ref1a,$ref2a) = split("-",$ELEM[$elem]);
 		my $mid_a = floor (($ref1a + $ref2a) / 2);
-		if ($SUMMARY[$ref1a]>=2 or $SUMMARY[$ref2a] >= 2 or $SUMMARY[$mid_a]>=2){$flag="no"}
+		if ($SUMMARY[$ref1a]>=2 or $SUMMARY[$ref2a] >= 2 or $SUMMARY[$mid_a]>=2 ){
+			$flag="no";
+		}
 	}
-	
+
 	if ($flag eq "pass"){
 		$rank ++ ; 
 		my @DISP_INFO = split (/\n/,$DISP_INFO{$results});
@@ -155,6 +181,27 @@ foreach my $results (sort {$b <=> $a} @RESULTS){
 				printf '%10s', "$IN[4]";
 				print "\n";
 			}
+		}
+        $overall_rank ++ ;
+        my @DISP_INFO = split (/\n/,$DISP_INFO{$results});
+        @DISP_INFO = uniq @DISP_INFO ;
+        @DISP_INFO = sort {$a <=> $b} @DISP_INFO ;
+        print  OUTTAB "\n$overall_rank.\tGlobalScore= $results\n\n" ;
+        printf OUTTAB '%20s', "Query";
+        printf OUTTAB '%10s', "Target";
+        printf OUTTAB '%10s', "AlnRes";
+        printf OUTTAB '%10s', "RMSD";
+        printf OUTTAB '%10s', "TM-score";
+        print  OUTTAB "\n";
+        foreach my $in (@DISP_INFO){
+                my @IN = split (" ",$in);
+                printf OUTTAB '%20s', "$IN[1]";
+                printf OUTTAB '%10s', "$IN[0]";
+                printf OUTTAB '%10s', "$IN[2]";
+                printf OUTTAB '%10s', "$IN[3]";
+                printf OUTTAB '%10s', "$IN[4]";
+                print  OUTTAB "\n"
+
 	}
 	$overall_rank ++ ;
 	my @DISP_INFO = split (/\n/,$DISP_INFO{$results});
@@ -323,7 +370,9 @@ sub pointer{
 	}
 
 	$CLUSTER{$point} .= "$point\t";
+	
 	foreach my $element (@POINTED){$mit .= "$element\t";}
 	$CLUSTER{$point} .= $mit;
+
 	return ($flag);
 }
