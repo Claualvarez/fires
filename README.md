@@ -3,7 +3,7 @@
 
 
 ## Benchmark:
-https://github.com/Claualvarez/Internal_structure_similarity_benchmark.git
+https://github.com/Claualvarez/Internal_structure_similarity_benchmark
 
 ## Web server: 
 http://fires.ifc.unam.mx/
