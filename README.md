@@ -5,6 +5,10 @@
 ## Benchmark 
 https://github.com/Claualvarez/Internal_structure_similarity_benchmark.git
 
+## Web server: 
+http://fires.ifc.unam.mx/
+
+## Standalone program
 INSTRUCTIONS 
 (Linux)
 
