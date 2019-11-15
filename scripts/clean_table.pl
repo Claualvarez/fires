@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # … 
 # Autor: Claudia Alvarez-Carreño
-# Fecha: 14 de noviembre de 2013
+
 use strict ;
 use POSIX;
 use List::MoreUtils qw(uniq);
