@@ -1,4 +1,4 @@
-#               FiRES: Find Repeated Elements in Structure              #
+#               FiRES (Find Repeated Elements in Structure):              #
 #   A computational method for de novo identification of repeats    #
 
 
