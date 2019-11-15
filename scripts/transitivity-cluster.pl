@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-
+# Author: Claudia Alvarez-Carreno
 use strict ;
 use List::Util qw[min max] ;
 use List::MoreUtils qw(uniq);
