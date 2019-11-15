@@ -2,6 +2,9 @@
 #   A computational method for de novo identification of repeats    #
 
 
+## Benchmark 
+https://github.com/Claualvarez/Internal_structure_similarity_benchmark.git
+
 INSTRUCTIONS 
 (Linux)
 
