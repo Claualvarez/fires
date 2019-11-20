@@ -5,6 +5,9 @@ FiRES can be used for the discovery of proteins containing similar structural el
 sequence identity (less than 20%)
 
 ## Benchmark:
+The performance of FiRES was assessed on two types of data: proteins with short tandem
+repeats and proteins with very divergent internal domain duplications.
+
 https://github.com/Claualvarez/Internal_structure_similarity_benchmark
 
 ## Web server: 
