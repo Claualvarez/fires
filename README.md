@@ -1,6 +1,9 @@
 #               FiRES (Find Repeated Elements in Structure):              #
 #   A computational method for de novo identification of repeats    #
 
+FiRES relies on a topology-independent structure alignment method to identify repeating elements in protein structure.
+FiRES can be used for the discovery of proteins containing similar structural elements with very low
+sequence identity (less than 20%)
 
 ## Benchmark:
 https://github.com/Claualvarez/Internal_structure_similarity_benchmark
