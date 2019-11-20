@@ -6,7 +6,7 @@ sequence identity (less than 20%)
 
 ## Benchmark:
 The performance of FiRES was assessed on two types of data: proteins with short tandem
-repeats and proteins with very divergent internal [domain duplications](MALIDUP_set/malidup_fires_binary.tsv).
+repeats and proteins with very divergent internal [domain duplications](Claualvarez/Internal_structure_similarity_benchmark/MALIDUP_set/malidup_fires_binary.tsv).
 
 https://github.com/Claualvarez/Internal_structure_similarity_benchmark
 
