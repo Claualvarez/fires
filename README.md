@@ -5,8 +5,8 @@ FiRES can be used for the discovery of proteins containing similar structural el
 sequence identity (less than 20%)
 
 ## Benchmark:
-The performance of FiRES was assessed on two types of data: proteins with short tandem
-repeats and proteins with very divergent internal [domain duplications](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/MALIDUP_reference_units.tsv).
+The performance of FiRES was assessed on two types of data: proteins with [short tandem
+repeats](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/repeatsdb_fires_binary.tsv) and proteins with very divergent internal [domain duplications](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/malidup_fires_binary.tsv).
 
 https://github.com/Claualvarez/Internal_structure_similarity_benchmark
 
