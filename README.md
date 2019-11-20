@@ -78,9 +78,9 @@ INSTRUCTIONS
 4) FiRES results
 
    4.1 FiRES generates three output files:
-       a) A list of similar structural elements
-       b) A structural alignment of the similar structural elements
-       c) A table of the best candidates, including those that were 
+       1. A list of similar structural elements
+       2. A structural alignment of the similar structural elements
+       3. A table of the best candidates, including those that were 
 	 excluded during the final evaluation step (marked with !)
 	 
 
