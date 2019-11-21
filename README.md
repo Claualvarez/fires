@@ -16,7 +16,7 @@ http://fires.ifc.unam.mx/
 INSTRUCTIONS 
 (Linux)
 
-1) Prerequisites
+1. Prerequisites
 
    1.1 List::MoreUtils module for perl
    
@@ -41,7 +41,7 @@ INSTRUCTIONS
        http://cospi.iiserpune.ac.in/click/Download/Download.jsp
 
 
-2) Setup
+2. Setup
 
    2.1 Extract the compressed package
       
@@ -61,7 +61,7 @@ INSTRUCTIONS
    (make sure to type only the path but not the name of the program)
 
    
-3) Test
+3. Test
 
        $ bash ./fires 1wm5.pdb A
        $ bash ./fires 3e3x.pdb A
@@ -74,7 +74,7 @@ INSTRUCTIONS
    
        $ bash ./fires 1wm5.pdb A > 1wm5.A.fires_output.txt
 
-4) FiRES results
+4. FiRES results
 
    4.1 FiRES generates three output files:
       1. A list of similar structural elements
