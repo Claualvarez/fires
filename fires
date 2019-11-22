@@ -1,6 +1,8 @@
 #!/bin/bash
-#fires controller script
-
+########################################################################################
+#                                                                                      #
+#                              fires controller script                                 #
+#                                                                                      #
 ########################################################################################
 
 path_to_fires='/home/path/to/fires-master/scripts'     # e.g. /usr/bin/fires-master/scripts
