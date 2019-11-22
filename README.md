@@ -50,8 +50,8 @@ INSTRUCTIONS
        $ unzip fires-master.zip
        $ cd fires-master
 
-   2.2 Locate the fires controller script.
-       Modify path to the scripts directory:
+   2.2 Locate the fires controller script. 
+       Modify the controller script to indicate the path to the directory called "scripts".
 
        path_to_fires='/path/to/fires-master/scripts'
 
