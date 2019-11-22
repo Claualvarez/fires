@@ -53,12 +53,12 @@ INSTRUCTIONS
    2.2 Locate the fires controller script. 
        Modify the variable `path_to_fires` at the fires controller script.
 
-       path_to_fires='/path/to/fires-master/scripts'
+       `path_to_fires='/path/to/fires-master/scripts'`
 
    2.3 Define the paths to your DSSP and Click directories at the top of the fires controller script:
    
-        $path_to_click="/path/to/click";
-        $path_to_dssp="/path/to/dssp";
+        `path_to_click="/path/to/click";`
+        `path_to_dssp="/path/to/dssp";`
 
    (make sure to type only the path but not the name of the program)
 
