@@ -51,7 +51,7 @@ INSTRUCTIONS
        $ cd fires-master
 
    2.2 Locate the fires controller script. 
-       Modify the variable `path_to_fires` at the fires controller script:
+       Modify the variable `path_to_fires` at the top of the fires controller script:
 
        path_to_fires='/path/to/fires-master/scripts'
 
