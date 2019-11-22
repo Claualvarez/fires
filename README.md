@@ -42,6 +42,8 @@ INSTRUCTIONS
 
 
 2. Setup
+  
+   2.0 Clone or download the [FiRES repository.](https://github.com/Claualvarez/fires.git)
 
    2.1 Extract the compressed package
       
@@ -52,8 +54,7 @@ INSTRUCTIONS
 
        path_to_fires='/path/to/fires-master/scripts'
 
-   2.3 Define the paths to your DSSP and Click directories at 
-   the top of the fires controller script:
+   2.3 Define the paths to your DSSP and Click directories at the top of the fires controller script:
    
         $path_to_click="/path/to/click";
         $path_to_dssp="/path/to/dssp";
