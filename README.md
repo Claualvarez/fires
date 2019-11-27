@@ -5,11 +5,15 @@ FiRES can be used for the discovery of proteins containing similar structural el
 
 ## Benchmark:
 The performance of FiRES was assessed using two datasets extracted from: 
-- [RepeatsDB](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/repeatsdb_fires_binary.tsv): a database of protein structures with tandem repeats; and 
->RepeatsDB 2.0: improved annotation, classification, search and visualization of repeat protein structures.
-Paladin L, Hirsh L, Piovesan D, Andrade-Navarro MA, Kajava AV, Tosatto SC
-Nucleic Acids Research 2016
-- [MALIDUP](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/malidup_fires_binary.tsv): proteins with very divergent internal domain duplications.
+- [RepeatsDB](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/repeatsdb_fires_binary.tsv): a database of protein structures with tandem repeats
+>Paladin L, Hirsh L, Piovesan D, et al. RepeatsDB 2.0: improved annotation,
+classification , search and visualization of repeat protein structures.
+Nucleic Acids Res. 2017;45:308-312. doi:10.1093/nar/gkw1136
+- [MALIDUP](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/malidup_fires_binary.tsv): 
+a database of proteins with homologous domains originated from internal duplication.
+>Cheng H, Kim B, Grishin N V. MALIDUP: a database of manually constructed
+structure alignments for duplicated domain pairs. Proteins Struct Funct Bioinforma.
+2007;70(4):1162-1166. doi:10.1002/prot.21783
 
 ## Web server: 
 http://fires.ifc.unam.mx/
