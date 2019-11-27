@@ -5,8 +5,9 @@ FiRES can be used for the discovery of proteins containing similar structural el
 
 ## Benchmark:
 The performance of FiRES was assessed using two datasets extracted from: 
-- [MALIDUP]((https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/repeatsdb_fires_binary.tsv)): this dataset contains proteins with short tandem
-repeats and proteins with very divergent internal [domain duplications](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/malidup_fires_binary.tsv).
+- [RepeatsDB](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/repeatsdb_fires_binary.tsv): this dataset contains proteins with short tandem
+repeats; and 
+- [MALIDUP](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/malidup_fires_binary.tsv): proteins with very divergent internal domain duplications.
 
 ## Web server: 
 http://fires.ifc.unam.mx/
