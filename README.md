@@ -8,7 +8,7 @@ The performance of FiRES was assessed using two datasets extracted from:
 - [RepeatsDB](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/repeatsdb_fires_binary.tsv): a database of protein structures with tandem repeats
 >Paladin L, Hirsh L, Piovesan D, et al. RepeatsDB 2.0: improved annotation,
 classification , search and visualization of repeat protein structures.
-Nucleic Acids Res. 2017;45:308-312. doi:10.1093/nar/gkw1136
+Nucleic Acids Res. 2017;(D1):D308-D312. doi:10.1093/nar/gkw1136
 - [MALIDUP](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/malidup_fires_binary.tsv): 
 a database of proteins with homologous domains originated from internal duplication.
 >Cheng H, Kim B, Grishin N V. MALIDUP: a database of manually constructed
