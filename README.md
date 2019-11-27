@@ -3,13 +3,10 @@
 FiRES (Find Repeated Elements in Structure) relies on a topology-independent structure alignment method to identify repeating elements in protein structure.
 FiRES can be used for the discovery of proteins containing similar structural elements with less than 20% identical residues.
 
-
-
 ## Benchmark:
-The performance of FiRES was assessed on two types of data: proteins with [short tandem
-repeats](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/repeatsdb_fires_binary.tsv) and proteins with very divergent internal [domain duplications](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/malidup_fires_binary.tsv).
-
-https://github.com/Claualvarez/Internal_structure_similarity_benchmark
+The performance of FiRES was assessed using two datasets extracted from: 
+- [MALIDUP]((https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/repeatsdb_fires_binary.tsv)): this dataset contains proteins with short tandem
+repeats and proteins with very divergent internal [domain duplications](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/malidup_fires_binary.tsv).
 
 ## Web server: 
 http://fires.ifc.unam.mx/
