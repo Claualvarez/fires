@@ -96,9 +96,9 @@ ______________________________________________________
 ## Please cite
 
 DSSP:
-Kabsch, W., and Sander, C. (1983) Dictionary of protein secondary structure: Pattern
+>Kabsch, W., and Sander, C. (1983) Dictionary of protein secondary structure: Pattern
 recognition of hydrogen‐bonded and geometrical features. Biopolymers. 22, 2577–2637
 
 Click:
-Nguyen, M. N., and Madhusudhan, M. S. (2011) Biological insights from topology
+>Nguyen, M. N., and Madhusudhan, M. S. (2011) Biological insights from topology
 independent comparison of protein 3D structures. Nucleic Acids Res. 10.1093/nar/gkr348
