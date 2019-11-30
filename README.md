@@ -73,7 +73,7 @@ INSTRUCTIONS
        $ bash ./fires 1wm5.pdb A
        $ bash ./fires 3e3x.pdb A
        
-   To save the top non-overlapping results run:
+   To the top non-overlapping results will be displayed, to save them run:
    
        $ bash ./fires [pdb_file] [chain_name] > [output_name]
        
