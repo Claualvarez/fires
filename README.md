@@ -36,9 +36,6 @@ INSTRUCTIONS
  
        $ sudo apt-get update
        $ sudo apt-get install dssp
-
-     or
-     
        $ conda install -c salilab dssp
 
    1.3 Click
