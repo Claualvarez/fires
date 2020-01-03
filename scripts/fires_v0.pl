@@ -95,7 +95,7 @@ if ($pdb =~/\w.*/ and $chaini =~ /\S+/ ){
 	$outname   = $pdb ; 
 	$pdbcode   = int(rand(10000)) ;
 
-	if ($chaini =~ /\-path/){print STDERR "Invalid input\nUsage: ./FiRES <pdb file> <chain name>\n";exit}
+	if ($chaini =~ /\-path/){print STDERR "Invalid input\nUsage: perl fires.pl -pdb <pdbid> -c <chain> [options]\n";exit}
 
 	$chainname = $chaini;
 	my $code   = $pdbcode;
@@ -108,7 +108,7 @@ if ($pdb =~/\w.*/ and $chaini =~ /\S+/ ){
 	$chaini    = "A";
 }
 else{
-	print "Error: invalid input\nUsage: perl fires.pl -input <pdbid_chain> [options]\n";exit
+	print "Error: invalid input\nUsage: perl fires.pl -pdb <pdbid> -c <chain> [options]\n";exit
 }
 
 
