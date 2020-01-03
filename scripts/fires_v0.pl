@@ -224,10 +224,12 @@ sub prepare_pdb{
 	my $dssp         = @_[4];
 	my $number ;
 	my $flag = 0;
+	
 	open IN, "$infile" or die "\n$!";
 	open OUT, ">$outfile";
 	while (my $line = <IN>){
-		if ($line =~ /^ATOM\s+/){
+		if($line =~ /^REMARK RES/){print OUT $line}
+		if($line =~ /^ATOM\s+/){
 			$line =~ /(^ATOM.)(......)(.....)(....)(..)(.*)/;
 			my $head = $1 ;
 			my $nb   = $2 ;
@@ -243,23 +245,54 @@ sub prepare_pdb{
 			}
 			if ($c eq $chain){
 				if ($aa =~ /^A/){
-				$aa =~ s/^A//;
-				print  OUT  "$head";
-				printf OUT '%6s',$number;
-				print  OUT "$atm $aa";
-				printf OUT '%2s', "A";
-				print  OUT "$inf\n";
-				$number ++;
+					$aa =~ s/^A//;
+					print  OUT  "$head";
+					printf OUT '%6s',$number;
+					print  OUT "$atm $aa";
+					printf OUT '%2s', "A";
+					print  OUT "$inf\n";
+					$number ++;
+				}elsif($aa =~ /^\s/){
+					print  OUT "$head";
+					printf OUT '%6s',$number;
+					print  OUT "$atm$aa";
+					printf OUT '%2s', "A";
+					print  OUT "$inf\n";
+					$number ++
+				}
 			}
-			elsif($aa =~ /^\s/){
-				print  OUT "$head";
-				printf OUT '%6s',$number;
-				print  OUT "$atm$aa";
-				printf OUT '%2s', "A";
-				print  OUT "$inf\n";
-				$number ++
-			}
-			}
+
+		}elsif($line =~ /^HETATM/){
+			$line =~ /(^HETATM)(.....)(.....)(....)(..)(.*)/;
+            		my $head = $1 ;
+            		my $nb   = $2 ;
+            		my $atm  = $3 ;
+            		my $aa   = $4 ;
+            		my $c    = $5 ;
+            		my $inf  = $6 ;
+            		$c =~ s/ //g;
+            		if ($c eq $chain and $flag == 0){
+                		$flag ++;
+                		$number = $nb ;
+            		}
+            		if ($c eq $chain){
+                		if ($aa =~ /^A/){	
+                    			$aa =~ s/^A//;
+                    			print  OUT  "ATOM  ";
+                    			printf OUT '%5s',$number;
+                    			print  OUT "$atm $aa";
+                    			printf OUT '%2s', "A";
+                    			print  OUT "$inf\n";
+                    			$number ++;
+                		}elsif($aa =~ /^\s/){
+                    			print  OUT "ATOM  ";
+                    			printf OUT '%5s',$number;
+                    			print  OUT "$atm$aa";
+                    			printf OUT '%2s', "A";
+                    			print  OUT "$inf\n";
+                    			$number ++;
+				}
+            		}
 		}
 	}
 	close OUT ;
