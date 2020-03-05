@@ -92,6 +92,11 @@ Note: FiRES takes as input a standard DPB file.
 ______________________________________________________
 ## Please cite
 
+FiRES:
+>Alvarez‐Carreño C., Coello G., Arciniega M. (2020) FiRES: A computational method for 
+the de novo identification of internal structure similarity in proteins. Proteins.
+https://doi.org/10.1002/prot.25886
+
 DSSP:
 >Kabsch, W., and Sander, C. (1983) Dictionary of protein secondary structure: Pattern
 recognition of hydrogen‐bonded and geometrical features. Biopolymers. 22, 2577–2637
