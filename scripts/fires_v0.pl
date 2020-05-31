@@ -8,13 +8,13 @@
 
 
 my $path_to_click="/usr/bin/Click_X86_64";
-my $path_to_dssp="/usr/binp";
+my $path_to_dssp="/usr/bin";
 
 
 #########################################################################
 
 use strict ;
-use integer;
+#use integer;
 use List::Util qw[min max] ;
 use List::MoreUtils qw(uniq);
 
@@ -28,7 +28,7 @@ my $min         = 1    ; # -min   minimum number of secondary structural element
 my $max         = 5    ; # -max   maximum number of secondary structural elements in the initial fragmentation (antes 7)
 my $divider     = 4    ; #        number of times the total number of secondary structural elements are going to be divided to determine the initial fragmentation
 my $rounds      = 15   ; # -i     maximum number of iterations
-my $eval        = 4    ; #        minimum number of sequential elements to be incorporated as a diagonal
+my $eval        = 2    ; #        minimum number of sequential elements to be incorporated as a diagonal
 my $reward      = 2    ; # -ext   rewarding points for a diagonal extension
 my $overlap     = 75   ; # -o     minimal Structure Overlap Score on the last click evaluation
 my $coverage    = 75   ; # -n     minimal percentage of overlapped atoms of the shortest chain over the longest chain compared 
@@ -203,8 +203,8 @@ my $suboptimal = "$outname.tab";
 suboptimal("candidates.txt",$suboptimal);
 system ("perl $path_to_fires/clean_table.pl -i $outname.tab -c $chaini > $outname\_$chainname.best ");
 system(" cp $pdbcode\_$chainname.pdb $outname.$chainname.pdb");
-system ("perl $path_to_fires/cater.pl -out $outname -pdb $pdbcode -i $outname\_$chainname.best -ch $chainname -c $chaini ");
-system("cat $outname\_$chainname.best");
+#system("cat $outname\_$chainname.best");
+system ("perl $path_to_fires/cater.pl -path $path_to_fires -out $outname -pdb $pdbcode -i $outname\_$chainname.best -ch $chainname -c $chaini ");
 system("mv $outname.tab.out $outname.out");
 system("rm $outname.$chainname.pdb $outname\_$chainname.best");
 
@@ -463,67 +463,121 @@ sub limpia{
 	my ($dir,$rep_p,$rep_n) = 0;
 	my $pos                 = -1;
 	my $round;
+	my $output_lines;
+	my $tm;
+	my $tm_threshold = 0.30;
 
 	open OUT, ">$pdbcode\_$chain.kmer.$i.s";
 	open LIST, "$pdbcode\_$chain.list.$i" or die "$pdbcode\_$chain.list.$i \n$!";
 
 	while (my $clique = <LIST> ){
-        	open CLICK, "$clique" or print "$clique\n" ;
+        open CLICK, "$clique" or print "$! $clique\n" ;
+		my $query  ;
+		my $target ;
+		my $first_raw;
+		my $second_raw;
+		my $rmsd;
+		my $ltarget;
+		my $c = $chain;
+		my ($cumulative,$ltarget,$d0,$rmsd,$matched,$in) ;
+
 		while (my $line = <CLICK> ){
 			chomp $line; 
-        		if ($line =~ /^\w\w? /){
-                		my ($chain1,$resnum1,undef,undef,$chain2,$resnum2,undef) = split (" ",$line,7);
-                		if ($last1 eq "INI"){
-                        		$dir   = 0;
-                        		$last1 = $resnum1;
-                        		$last2 = $resnum2;
-                        		$rep_p = 1;
-                        		$rep_n = 1;
-                        		next;
-                		}
+			my @LINE = split (" ",$line);
+        	my ($fx,$fy,$fz,$sx,$sy,$sz);
 
-                		if ($resnum1 == $last1 + 1){
-                        		$dir = $resnum2 - $last2;
-                        		if ($dir == 1){
-                        	        	$last1 = $resnum1;
-                        	        	$last2 = $resnum2;
-                        	        	$rep_p ++;
-	                        	}elsif ($dir == -1){
-        	                	        $last1 = $resnum1;
-                	                	$last2 = $resnum2;
-                        	        	$rep_n ++;
-                        		}else{
-                                		$last1 = $resnum1;
-                                		$last2 = $resnum2;
-                                		$rep_p = 1;
-                                		$rep_n = 1;
-                        		}
-                        		if ($rep_p == $eval or $rep_n == $eval){
-                               			my ($res1,$res2);
-                                		for (my $i = $eval - 1; $i >= 0; $i-- ) {
-                                        		if ($rep_p == $eval){
-                                           			$res1 = $resnum1 - $i ;
-                                           			$res2 = $resnum2 - $i ;
-								print OUT "$res1\t$res2\n";
-                                        		}
-                                        		if ($rep_n == $eval){
-                                           			$res1 = $resnum1 - $i ;
-                                           			$res2 = $resnum2 + $i ;	
-                                        		}
-
-                                		}
-                        		}elsif ($rep_p > $eval) {print OUT "$resnum1\t$resnum2\n"}
-					
-                		}else{
-                        		$last1 = $resnum1;
-                        		$last2 = $resnum2;
-                        		$rep_p = 1;
-                        		$rep_n = 1;
-                		}
+			if ($line =~ /^Number of.*of\s+(\S+)\s+and\s+(\S+)\s+=\s+([0-9]+)\s+and\s+([0-9]+)/){
+				$query      = $1;
+				$target     = $2;
+				$first_raw  = "$target-$query.1.pdb\n";
+    			$second_raw = "$query-$target.1.pdb\n";
+				my $optionA = 0 + $3;
+           		my $optionB = 0 + $4;
+            	my @OPTIONS;
+            	push @OPTIONS , $optionA ;
+            	push @OPTIONS , $optionB ;
+            	my @SOPTIONS = sort {$a <=> $b} @OPTIONS;
+            	$ltarget =  $OPTIONS[0];
 			}
+        	if ($line =~ /RMSD =\s+(\S+)/){$rmsd = $1}
+        	$d0    = 1.24 * (($ltarget - 15) **(1/3)) - 1.8; 
+        	if ($line =~ /^$c/){
+            	open FIRST, "$first_raw" or die "\n$!";
+            	while (my $f = <FIRST>){
+                	my @F = split (" ",$f);
+                	if ($f =~ /CA\s+$CODE{$LINE[2]}\s+$c\s+$LINE[1]/) {$fx=$F[6]; $fy=$F[7]; $fz=$F[8]; 
+					last}
+            	}
+            	open SECOND, "$second_raw"or die "\n$!";
+            	while (my $s = <SECOND>){
+                	my @S = split (" ",$s);
+                	if ($s =~ /CA\s+$CODE{$LINE[6]}\s+$c\s+$LINE[5]/) {$sx=$S[6]; $sy=$S[7]; $sz=$S[8]; last}
+            	}
+           		my $di = (sqrt(($fx-$sx)**2 + ($fy-$sy)**2 + ($fz-$sz)**2)) ;
+            	my $chunk = 1 / (1+( ($di /$d0) ** 2)) ;
+            	$cumulative = $cumulative + $chunk ;
         	}
-	}
+		if ($ltarget <= 0){$tm = 10}
+    	else{
+        	my $unround =  $cumulative * (1/($ltarget+1));
+        	$tm = sprintf("%.4f", $unround);
+    	}
 
+        	if ($line =~ /^\w\w? /){
+                my ($chain1,$resnum1,undef,undef,$chain2,$resnum2,undef) = split (" ",$line,7);
+                if ($last1 eq "INI"){
+                    $dir   = 0;
+                    $last1 = $resnum1;
+                    $last2 = $resnum2;
+                    $rep_p = 1;
+                    $rep_n = 1;
+                    next;
+                }
+
+                if ($resnum1 == $last1 + 1){
+                    $dir = $resnum2 - $last2;
+                    if ($dir == 1){
+                        $last1 = $resnum1;
+                        $last2 = $resnum2;
+                        $rep_p ++;
+	                }elsif ($dir == -1){
+        	            $last1 = $resnum1;
+                	    $last2 = $resnum2;
+                        $rep_n ++;
+                    }else{
+                        $last1 = $resnum1;
+                        $last2 = $resnum2;
+                        $rep_p = 1;
+                        $rep_n = 1;
+                    }
+                	if ($rep_p == $eval or $rep_n == $eval){
+                        my ($res1,$res2);
+                        for (my $i = $eval - 1; $i >= 0; $i-- ) {
+                            if ($rep_p == $eval){
+                                $res1 = $resnum1 - $i ;
+                                $res2 = $resnum2 - $i ;
+								$output_lines .= "$res1\t$res2\n";
+                            }
+                            if ($rep_n == $eval){
+                                $res1 = $resnum1 - $i ;
+                                $res2 = $resnum2 + $i ;	
+                            }
+						}
+                    }elsif ($rep_p > $eval) {
+						$output_lines .= "$resnum1\t$resnum2\n" 
+					}
+					
+                }else{
+                    $last1 = $resnum1;
+                    $last2 = $resnum2;
+                    $rep_p = 1;
+                    $rep_n = 1;
+                }
+			}
+        }
+		if ($tm >= $tm_threshold){print OUT "$output_lines"}
+		
+	}
 	close OUT;
 	my $input  = "$pdbcode\_$chain.kmer.$i.s";
 	my $output = "$pdbcode\_$chain.kmer.$i.sorted";
