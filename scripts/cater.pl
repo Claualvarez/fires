@@ -13,6 +13,7 @@ my $chain_name ;
 my $pdb ;
 my $outfile_name ;
 my $path_to_fires;
+my $path_to_click ;
 my $range;
 my $pairs ;
 
@@ -23,6 +24,7 @@ if ($options =~ / -ch\s+(\S+) /)   {$chain_name    = $1}
 if ($options =~ / -pdb\s+(\S+) /)  {$pdb    = $1}
 if ($options =~ / -out\s+(\S+) /)  {$outname    = $1}
 if ($options =~ / -path\s+(\S+) /) {$path_to_fires    = $1}
+if ($options =~ / -click\s+(\S+) /) {$path_to_click    = $1}
 
 chomp $infile;
 my $dssp_name = "$pdb\_$chain_name.dssp";
@@ -82,7 +84,7 @@ while (my $line = <IN> ){
 			}
 		}
 		print OUT "TERM\n";
-		system("perl $path_to_fires/str-base-msa_v-1.pl query.pdb target.pdb -dssp1 $dssp_name -dssp2 $dssp_name >> temp_ali");
+		system("perl $path_to_fires/str-base-msa_v-1.pl query.pdb target.pdb -path $path_to_click -dssp1 $dssp_name -dssp2 $dssp_name >> temp_ali");
 	}
 
 }
