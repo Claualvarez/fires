@@ -204,7 +204,9 @@ suboptimal("candidates.txt",$suboptimal);
 system ("perl $path_to_fires/clean_table.pl -i $outname.tab -c $chaini > $outname\_$chainname.best ");
 system(" cp $pdbcode\_$chainname.pdb $outname.$chainname.pdb");
 #system("cat $outname\_$chainname.best");
-system ("perl $path_to_fires/cater.pl -path $path_to_fires -out $outname -pdb $pdbcode -i $outname\_$chainname.best -ch $chainname -c $chaini ");
+#system ("perl $path_to_fires/cater.pl -path $path_to_fires -out $outname -pdb $pdbcode -i $outname\_$chainname.best -ch $chainname -c $chaini ");
+system ("perl $path_to_fires/cater.pl -click $path_to_click -path $path_to_fires -out $outname -pdb $pdbcode -i $outname\_$chainname.best -ch $chainname -c $chaini ");
+
 system("mv $outname.tab.out $outname.out");
 system("rm $outname.$chainname.pdb $outname\_$chainname.best");
 
