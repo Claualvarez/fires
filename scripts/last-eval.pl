@@ -145,8 +145,8 @@ foreach my $files (sort {$a<=>$b} keys %FILES){
 }
 
 sub score{
-        my ($cumulative,$ltarget,$d0,$rmsd,$matched,$c,$in) ;
-        my $input  = @_[0];
+    my ($cumulative,$ltarget,$d0,$rmsd,$matched,$c,$in) ;
+    my $input  = @_[0];
 	my $c      = @_[1];
 	my @INPUT  = split (/\./,$input);
 	my $query  = "$INPUT[1]";
@@ -155,54 +155,51 @@ sub score{
 	$query =~ s/-$pdb//;
 	$target =~ s/-$pdb//; 
 	
-        my $chaini = @_[3];
+    my $chaini = @_[3];
+    my $clique = "$pdb.$query-$pdb.$target.pdb.1.clique\n";
+    my $first_raw = "$pdb.$target-$pdb.$query.1.pdb\n";
+    my $second_raw = "$pdb.$query-$pdb.$target.1.pdb\n";
 
-        my $clique = "$pdb.$query-$pdb.$target.pdb.1.clique\n";
-        my $first_raw = "$pdb.$target-$pdb.$query.1.pdb\n";
-        my $second_raw = "$pdb.$query-$pdb.$target.1.pdb\n";
-
-        open CLI, "$clique" or die "\n$!";
-        while (my $line = <CLI>){
-                my @LINE = split (" ",$line);
-                my ($fx,$fy,$fz,$sx,$sy,$sz);
-                if ($line =~ /The number of matched atoms =\s+(\S+)\s/){
-                        $matched = $1;
-                }
-                if ($line =~ /RMSD =\s+(\S+)/){$rmsd = $1}
-                if ($line =~ /^Number.*=\s+([0-9]+)\s+and\s+([0-9]+)/){
-                        my $optionA = $1;
-                        my $optionB = $2;
-                        my @OPTIONS;
-                        push @OPTIONS , $optionA ;
-                        push @OPTIONS , $optionB ;
-                        my @SOPTIONS = sort {$a <=> $b} @OPTIONS;
-                        $ltarget =  $OPTIONS[0];
-                }
-                $d0    = 1.24 * (($ltarget - 15) **(1/3)) - 1.8;
-                if ($line =~ /^$c/){
-                        open FIRST, "$first_raw" or die "\n$!";
-                        while (my $f = <FIRST>){
-                                my @F = split (" ",$f);
-                                if ($f =~ /CA\s+$CODE{$LINE[2]}\s+$c\s+$LINE[1]/) {$fx=$F[6]; $fy=$F[7]; $fz=$F[8]; last}
-                        }
-                        open SECOND, "$second_raw"or die "\n$!";
-                        while (my $s = <SECOND>){
-                                my @S = split (" ",$s);
-                                if ($s =~ /CA\s+$CODE{$LINE[6]}\s+$c\s+$LINE[5]/) {$sx=$S[6]; $sy=$S[7]; $sz=$S[8]; last}
-                        }
-                        my $di = (sqrt(($fx-$sx)**2 + ($fy-$sy)**2 + ($fz-$sz)**2)) ;
-                        my $chunk = 1 / (1+( ($di /$d0) ** 2)) ;
-                        $cumulative = $cumulative + $chunk ;
-                }
-
+    open CLI, "$clique" or die "\n$!";
+    while (my $line = <CLI>){
+        my @LINE = split (" ",$line);
+        my ($fx,$fy,$fz,$sx,$sy,$sz);
+        if ($line =~ /The number of matched atoms =\s+(\S+)\s/){
+            $matched = $1;
         }
-        if ($ltarget <= 0){return("err")}
-        else{
-                my $unround =  $cumulative * (1/$ltarget);
-                my $tm = sprintf("%.4f", $unround);
-
-                return($tm,$rmsd,$matched)
+        if ($line =~ /RMSD =\s+(\S+)/){$rmsd = $1}
+        if ($line =~ /^Number.*=\s+([0-9]+)\s+and\s+([0-9]+)/){
+            my $optionA = $1;
+            my $optionB = $2;
+            my @OPTIONS;
+            push @OPTIONS , $optionA ;
+            push @OPTIONS , $optionB ;
+            my @SOPTIONS = sort {$a <=> $b} @OPTIONS;
+            $ltarget =  $OPTIONS[1];
         }
+        $d0    = 1.24 * (($ltarget - 15) **(1/3)) - 1.8;
+        if ($line =~ /^$c/){
+            open FIRST, "$first_raw" or die "\n$!";
+            while (my $f = <FIRST>){
+                my @F = split (" ",$f);
+                if ($f =~ /CA\s+$CODE{$LINE[2]}\s+$c\s+$LINE[1]/) {$fx=$F[6]; $fy=$F[7]; $fz=$F[8]; last}
+            }
+            open SECOND, "$second_raw"or die "\n$!";
+            while (my $s = <SECOND>){
+                my @S = split (" ",$s);
+                if ($s =~ /CA\s+$CODE{$LINE[6]}\s+$c\s+$LINE[5]/) {$sx=$S[6]; $sy=$S[7]; $sz=$S[8]; last}
+            }
+            my $di = (sqrt(($fx-$sx)**2 + ($fy-$sy)**2 + ($fz-$sz)**2)) ;
+            my $chunk = 1 / (1+( ($di /$d0) ** 2)) ;
+            $cumulative = $cumulative + $chunk ;
+        }
+    }
+    if ($ltarget <= 0){return("err")}
+    else{
+        my $unround =  $cumulative * (1/$ltarget);
+        my $tm = sprintf("%.4f", $unround);
+        return($tm,$rmsd,$matched)
+    }
 }
 
 
