@@ -34,7 +34,7 @@ my ($number,$nb) = 0;
 while (my $line = <IN> ){
 	if ($line =~ /^([0-9]+)\..*Query: \[(.*)\].*:(.*)/){
 		if(-f "temp_ali" ){
-			print "\n  Structure-derived pairwise sequence alignment of Query [ $range ] and Pairs$pairs\n\n";
+			print "\n  Structure-derived pairwise sequence alignment of Query [ $range ] and Pairs$pairs\n";
 			system("cat temp_ali "); system ("rm temp_ali")
 		}
 		print "\n$line";
