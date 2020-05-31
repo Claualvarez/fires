@@ -38,11 +38,10 @@ while (my $line = <IN> ){
 }
 close IN;
 
-for (my $i = 0 ; $i < 2000 ; $i ++){
-	for (my $j = 0 ; $j < 2000 ; $j ++){
+for (my $i = 0 ; $i < 20000 ; $i ++){
+	for (my $j = 0 ; $j < 20000 ; $j ++){
 		my $check_1 = "$i-$j";
 		if ($KEEPER{$check_1} =~ /\S+/){			
-#			print "$KEEPER{$check_1}\n";
 			my $flag             = pointer($check_1);
 			my @ENDING           = split (/\t/, $KEEPER{$check_1});
 			my @LINE             = ($check_1,@ENDING);
