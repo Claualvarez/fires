@@ -13,6 +13,7 @@ my $method = "click" ;
 my $dssp_file1;
 my $dssp_file2;
 my @dssp;
+my $path_to_click;
 
 my %SS = (
     "H" => "H",
@@ -31,6 +32,7 @@ if ($options =~ / -o\s+(\S+) /) {$out      = $1}
 if ($options =~ / -m\s+(\S+) /) {$method   = $1}
 if ($options =~ / -dssp1\s+(\S+)/ ) {$dssp_file1  = $1}
 if ($options =~ / -dssp2\s+(\S+)/) {$dssp_file2  = $1}
+if ($options =~ / -path\s+(\S+)/) {$path_to_click  = $1}
 
 
 my $upper_fasta_name = $ARGV[0]; 
@@ -115,10 +117,10 @@ sub superimpose{
 	my ($fasta_2,$chain_2) = fasta_from_pdb($pdb_2);
 
 	if($method eq "click"){
-		system("/home/claudia/fires/Click_X86_64/click $pdb_1 $pdb_2 > t.temp ");
+		system("$path_to_click/click $pdb_1 $pdb_2 > t.temp ");
 		$tm_score_s = quality_check($superimp,$chain_2,$chain_1);
 
-		system("/home/claudia/fires/Click_X86_64/click $pdb_2 $pdb_1 > t.temp ");
+		system("$path_to_click/click $pdb_2 $pdb_1 > t.temp ");
 		$tm_score_r = quality_check($superimpr,$chain_2,$chain_1);
 	}
 
