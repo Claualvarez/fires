@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# Author: Claudia Alvarez-Carreno
+# Author: Claudia Alvarez-Carreno   ccarreno6(at)gatech.edu
 
 use strict ;
 
@@ -95,6 +95,7 @@ sub corta{
 
 	open OUT, ">$pdb\.$aa1$res_nb1-$aa2$res_nb2\.pdb" ;
 	while (my $line = <INPDB>){
+		if($line =~ /^REMARK RES/){print OUT $line}
 		if ($line =~/^ATOM\s+[0-9]+\s+\w+\s+(\w+)\s+(\w+)\s+([0-9]+)\s+/){
 			my $aa = $1; my $chain =$2; my $pos= $3;
 			$line =~/^ATOM\s+[0-9]+(\s+\w+\s+\w+\s+\w+\s+[0-9]+\s+.*)/;
