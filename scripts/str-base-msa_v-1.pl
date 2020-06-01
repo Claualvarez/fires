@@ -326,6 +326,7 @@ sub subdivide{
 
 	my $total_fragments = $#lower_fragment +1 ;
 	my (@upper_bs,@lower_bs);
+	my ($O1,$O2,$O3,$O4,$O5);
 	for (my $j = 0 ; $j < $total_fragments ; $j ++){
 		my @current_ufragment = split (/\n/,$upper_fragment[$j]);
 		@current_ufragment = uniq @current_ufragment;
@@ -334,12 +335,18 @@ sub subdivide{
 		@current_lfragment = uniq @current_lfragment;
 		my $current_l = join "\n", @current_lfragment;
 
-		my ($upper_bi,$upper_bf,$lower_bi,$lower_bf) = align($current_l,$current_u,$upper_fasta,$lower_fasta,$upper_fasta_name,$lower_fasta_name);
+		my ($upper_bi,$upper_bf,$lower_bi,$lower_bf,$o1,$o2,$o3,$o4,$o5) = align($current_l,$current_u,$upper_fasta,$lower_fasta,$upper_fasta_name,$lower_fasta_name);
+		$O1 .= $o1;
+		$O2 .= $o2;
+		$O3 .= $o3;
+		$O4 .= $o4;
+		$O5 .= $o5;
 		if ($upper_bi =~ /\S+/){push @upper_bs, $upper_bi}
 		if ($upper_bf =~ /\S+/){push @upper_bs, $upper_bf}
 		if ($lower_bi =~ /\S+/){push @lower_bs, $lower_bi}
 		if ($lower_bf =~ /\S+/){push @lower_bs, $lower_bf}
 	}
+	print "  query SS  |$O1\n  query     |$O2\n            |$O3\n  target    |$O4\n  target SS |$O5\n\n";
 	my @upper_fasta = split (//,$upper_fasta);
 	my @lower_fasta = split (//,$lower_fasta);
 	@upper_bs = sort {$a <=> $b} @upper_bs;
@@ -415,6 +422,12 @@ sub align{
 	push @lower_bs, $l1;
 	push @lower_bs, $llast;
 	
+	my $line_SS_query;
+	my $line_upper_fasta;
+	my $line_tics;
+	my $line_lower_fasta;
+	my $line_SS_target;
+
 	if ($u1 =~ /\S+/){
 		if (($ulast - $u1) < 1){}
 		else{
@@ -422,62 +435,69 @@ sub align{
 			my $lower_dssp;
 			$upper_fasta_name =~ s/\.pdb$//;
 			$lower_fasta_name =~ s/\.pdb$//;
-			printf '%10s',"SS_query";
-			printf '%6s';
+			#$line_SS_query  .= sprintf '%10s',"SS_query";
+			$line_SS_query .= sprintf '%6s';
 			for (my $i = $u1-1 ; $i < $ulast ; $i ++){
-				print "$UPPER[1][$i]$dssp[1][$i]";
+				$line_SS_query .= "$UPPER[1][$i]$dssp[1][$i]";
 				$upper_dssp .= "$UPPER[1][$i]$dssp[1][$i]";
 			}
 
-			print "\n";
-			printf '%10s', "$upper_fasta_name"  ;
-    		printf '%6s', " $u1 ";
+			$line_SS_query .= sprintf '%+9s', "|";
+			#$line_upper_fasta .= sprintf '%10s', "$upper_fasta_name"  ;
+    		$line_upper_fasta .= sprintf '%6s', " $u1 ";
 	        for (my $i = $u1-1 ; $i < $ulast ; $i ++){
-				print "$UPPER[1][$i]$UPPER[0][$i]";
+				$line_upper_fasta .= "$UPPER[1][$i]$UPPER[0][$i]";
 			}
-			printf '%+6s', " $ulast ";
+			$line_upper_fasta .= sprintf '%+6s', " $ulast ";
 
-			print "\n";
-			printf '%10s',"";
-			printf '%6s';
+			$line_upper_fasta .= sprintf '%+3s' , "|";
+			#$line_tics .= sprintf '%10s',"";
+			$line_tics .= sprintf '%6s';
 			for (my $i = $l1-1 ; $i < $llast ; $i ++){
 				$lower_dssp .= "$LOWER[1][ $i]$dssp[2][$i]";
 			}
 			my @upper_dssp = split (//,$upper_dssp);
 			my @lower_dssp = split (//,$lower_dssp);
     	   	for (my $i = 0 ; $i < $#upper_dssp + 1; $i ++){
-				if($lower_dssp[$i] =~ /-/ or $upper_dssp[$i] =~ /-/){print " "}
+				if($lower_dssp[$i] =~ /-/ or $upper_dssp[$i] =~ /-/){$line_tics .= " "}
 				else{
 					if ($lower_dssp[$i] eq $upper_dssp[$i]){
-						if($lower_dssp[$i] =~ /[A-Z]/){print "|"}
-						else{print ":"}
+						if($lower_dssp[$i] =~ /[A-Z]/){$line_tics .= ":"}
+						else{$line_tics .= ":"}
 					}
-					else{print "."}
+					else{$line_tics .= "."}
 				}
 			}
 
-			print "\n";
-			printf '%10s', $lower_fasta_name  ;
-	       	printf '%6s'," $l1 ";
+			$line_tics .= sprintf '%+9s', "|";
+			#$line_lower_fasta .= sprintf '%10s', $lower_fasta_name  ;
+	       	$line_lower_fasta .= sprintf '%6s'," $l1 ";
     	   	for (my $i = $l1-1 ; $i < $llast ; $i ++){
-				print "$LOWER[1][ $i]$LOWER[0][$i]";
+				$line_lower_fasta .= "$LOWER[1][ $i]$LOWER[0][$i]";
 			}
-			printf '%+6s', " $llast ";	
-			print "\n";
-			printf '%10s', "SS_target";
-			printf '%6s';
-			print "$lower_dssp\n";			
-
-       		print "\n\n";
+			$line_lower_fasta .= sprintf '%+6s', " $llast ";	
+			$line_lower_fasta .= sprintf '%+3s', "|";
+			#$line_SS_target .= sprintf '%10s', "SS_target";
+			$line_SS_target .= sprintf '%6s';
+			$line_SS_target .= "$lower_dssp";			
+			$line_SS_target .= sprintf '%+9s', "|";
 		}
 	}
+
+	#print "$line_SS_query\n";
+	#print "$line_upper_fasta\n";
+	#print "$line_tics\n";
+	#print "$line_lower_fasta\n";
+	#print "$line_SS_target\n\n";
+
+
 	@upper_bs = sort {$a <=> $b} @upper_bs;
 	@lower_bs = sort {$a <=> $b} @lower_bs;
 	my $upper_bi = $upper_bs[0];
 	my $upper_bf = $upper_bs[$#upper_bs];
 	my $lower_bi = $lower_bs[0];
 	my $lower_bf = $lower_bs[$#lower_bs];
-	return($upper_bi,$upper_bf,$lower_bi,$lower_bf);
+	return($upper_bi,$upper_bf,$lower_bi,$lower_bf,$line_SS_query,$line_upper_fasta,$line_tics,$line_lower_fasta,$line_SS_target);
 }
 
 
