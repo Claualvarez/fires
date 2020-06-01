@@ -68,9 +68,38 @@ INSTRUCTIONS
 3. Test
 
        $ bash ./fires 1wm5.pdb A
-       $ bash ./fires 3e3x.pdb A
        
-   To the top non-overlapping results will be displayed, to save them run:
+   To the top non-overlapping results will be prompted:
+   
+`   1.      GlobalScore= 72.775     Query: [ 10-37 ]        Pair(s): [ 41-68; 75-102; 125-152 ]
+               Query    Target    AlnRes      RMSD  TM-score
+               10-37     41-68        28      0.57    0.8502
+               10-37    75-102        28      0.51    0.8783
+               10-37   125-152        28      0.49    0.8706
+
+  Structure-derived pairwise sequence alignment of Query [  10-37  ] and Pairs [ 41-68; 75-102; 125-152 ]
+  SS_query      HHHHHHHHHHHHHHcccHHHHHHHHHcc
+     query   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37 
+                .|||||||||||||:::|||||||||..
+    target   41 HSRICFNIGCMYTILKNMTEAEKAFTRS   68 
+ SS_target      cHHHHHHHHHHHHHcccHHHHHHHHHHH
+
+
+  SS_query      HHHHHHHHHHHHHHcccHHHHHHHHHcc
+     query   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37 
+                .|||||||||||||:::|||||||||..
+    target   75 LAVAYFQRGMLYYQTEKYDLAIKDLKEA  102 
+ SS_target      cHHHHHHHHHHHHHcccHHHHHHHHHHH
+
+
+  SS_query      HHHHHHHHHHHHHHcccHHHHHHHHHcc
+     query   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37 
+                ||||||||||||||:::|||||||||..
+    target  125 ACEVLYNIAFMYAKKEEWKKAEEQLALA  152 
+ SS_target      HHHHHHHHHHHHHHcccHHHHHHHHHHH`
+   
+
+   To save the top results run:
    
        $ bash ./fires [pdb_file] [chain_name] > [output_name]
        
