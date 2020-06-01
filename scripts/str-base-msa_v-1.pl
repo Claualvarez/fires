@@ -151,7 +151,6 @@ sub superimpose{
 		$Lower_line .= "$COL[1]\n";
 	}
 	my ($tempname1,$tempname2,$upper_index,$lower_index) = subdivide($Lower_line,$Upper_line,$fasta_1,$fasta_2,$upper_fasta_name,$lower_fasta_name);
-	system ("~/bin/fasta36/bin/lalign36  $tempname1 $tempname2 > lalign.temp.txt ");
 	return($upper_index,$lower_index,$fasta_1,$fasta_2,@all_pairs);
 }
 
