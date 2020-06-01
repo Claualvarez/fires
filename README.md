@@ -3,18 +3,6 @@
 FiRES (Find Repeated Elements in Structure) relies on a topology-independent structure alignment method to identify repeating elements in protein structure.
 FiRES can be used for the discovery of proteins containing similar structural elements with less than 20% identical residues.
 
-## [Benchmark:](https://github.com/Claualvarez/Internal_structure_similarity_benchmark)
-The performance of FiRES was assessed using two datasets extracted from: 
-- [RepeatsDB](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/RepeatsDB_reference_units.tsv): a database of protein structures with tandem repeats
->Paladin L, Hirsh L, Piovesan D, et al. RepeatsDB 2.0: improved annotation,
-classification , search and visualization of repeat protein structures.
-Nucleic Acids Res. 2017;(D1):D308-D312. doi:10.1093/nar/gkw1136
-- [MALIDUP](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/MALIDUP_reference_units.tsv): 
-a database of proteins with homologous domains originated from internal duplication.
->Cheng H, Kim B, Grishin N V. MALIDUP: a database of manually constructed
-structure alignments for duplicated domain pairs. Proteins Struct Funct Bioinforma.
-2007;70(4):1162-1166. doi:10.1002/prot.21783
-
 ## Web server: 
 http://fires.ifc.unam.mx/
 
@@ -117,6 +105,19 @@ INSTRUCTIONS
 	 
 
 Note: FiRES takes as input a standard DPB file. 
+
+______________________________________________________
+## [Benchmark:](https://github.com/Claualvarez/Internal_structure_similarity_benchmark)
+The performance of FiRES was assessed using two datasets extracted from: 
+- [RepeatsDB](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/RepeatsDB/RepeatsDB_reference_units.tsv): a database of protein structures with tandem repeats
+>Paladin L, Hirsh L, Piovesan D, et al. RepeatsDB 2.0: improved annotation,
+classification , search and visualization of repeat protein structures.
+Nucleic Acids Res. 2017;(D1):D308-D312. doi:10.1093/nar/gkw1136
+- [MALIDUP](https://github.com/Claualvarez/Internal_structure_similarity_benchmark/blob/master/MALIDUP_set/MALIDUP_reference_units.tsv): 
+a database of proteins with homologous domains originated from internal duplication.
+>Cheng H, Kim B, Grishin N V. MALIDUP: a database of manually constructed
+structure alignments for duplicated domain pairs. Proteins Struct Funct Bioinforma.
+2007;70(4):1162-1166. doi:10.1002/prot.21783
 
 ______________________________________________________
 ## Please cite
