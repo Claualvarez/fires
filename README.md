@@ -67,25 +67,23 @@ INSTRUCTIONS
                10-37   125-152        28      0.49    0.8706
 
   Structure-derived pairwise sequence alignment of Query [  10-37  ] and Pairs [ 41-68; 75-102; 125-152 ]
-  SS_query      HHHHHHHHHHHHHHcccHHHHHHHHHcc
-     query   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37 
-                .|||||||||||||:::|||||||||..
-    target   41 HSRICFNIGCMYTILKNMTEAEKAFTRS   68 
- SS_target      cHHHHHHHHHHHHHcccHHHHHHHHHHH
+  query SS  |      HHHHHHHHHHHHHHcccHHHHHHHHHcc        |
+  query     |   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37   |
+            |      .:::::::::::::::::::::::::..        |
+  target    |   41 HSRICFNIGCMYTILKNMTEAEKAFTRS   68   |
+  target SS |      cHHHHHHHHHHHHHcccHHHHHHHHHHH        |
 
+  query SS  |      HHHHHHHHHHHHHHcccHHHHHHHHHcc        |
+  query     |   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37   |
+            |      .:::::::::::::::::::::::::..        |
+  target    |   75 LAVAYFQRGMLYYQTEKYDLAIKDLKEA  102   |
+  target SS |      cHHHHHHHHHHHHHcccHHHHHHHHHHH        |
 
-  SS_query      HHHHHHHHHHHHHHcccHHHHHHHHHcc
-     query   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37 
-                .|||||||||||||:::|||||||||..
-    target   75 LAVAYFQRGMLYYQTEKYDLAIKDLKEA  102 
- SS_target      cHHHHHHHHHHHHHcccHHHHHHHHHHH
-
-
-  SS_query      HHHHHHHHHHHHHHcccHHHHHHHHHcc
-     query   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37 
-                ||||||||||||||:::|||||||||..
-    target  125 ACEVLYNIAFMYAKKEEWKKAEEQLALA  152 
- SS_target      HHHHHHHHHHHHHHcccHHHHHHHHHHH
+  query SS  |      HHHHHHHHHHHHHHcccHHHHHHHHHcc        |
+  query     |   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37   |
+            |      ::::::::::::::::::::::::::..        |
+  target    |  125 ACEVLYNIAFMYAKKEEWKKAEEQLALA  152   |
+  target SS |      HHHHHHHHHHHHHHcccHHHHHHHHHHH        |
 ```   
 
    To save the top results run:
