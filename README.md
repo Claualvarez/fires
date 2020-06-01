@@ -71,7 +71,7 @@ INSTRUCTIONS
        
    To the top non-overlapping results will be prompted:
    
-``   1.      GlobalScore= 72.775     Query: [ 10-37 ]        Pair(s): [ 41-68; 75-102; 125-152 ]
+```   1.      GlobalScore= 72.775     Query: [ 10-37 ]        Pair(s): [ 41-68; 75-102; 125-152 ]
                Query    Target    AlnRes      RMSD  TM-score
                10-37     41-68        28      0.57    0.8502
                10-37    75-102        28      0.51    0.8783
@@ -96,8 +96,8 @@ INSTRUCTIONS
      query   10 EAISLWNEGVLAADKKDWKGALDAFSAV   37 
                 ||||||||||||||:::|||||||||..
     target  125 ACEVLYNIAFMYAKKEEWKKAEEQLALA  152 
- SS_target      HHHHHHHHHHHHHHcccHHHHHHHHHHH``
-   
+ SS_target      HHHHHHHHHHHHHHcccHHHHHHHHHHH
+```   
 
    To save the top results run:
    
