@@ -33,8 +33,6 @@ if ($options =~ / -m\s+(\S+) /) {$method   = $1}
 if ($options =~ / -dssp1\s+(\S+)/ ) {$dssp_file1  = $1}
 if ($options =~ / -dssp2\s+(\S+)/) {$dssp_file2  = $1}
 if ($options =~ / -path\s+(\S+)/) {$path_to_click  = $1}
-
-
 my $upper_fasta_name = $ARGV[0]; 
 my $lower_fasta_name = $ARGV[1]; 
 
@@ -65,15 +63,15 @@ if ($dssp_file2 =~ /\S+/){
 
 }
 
-my ($upper_index,$lower_index,$upper_fasta,$lower_fasta,@str_pairs) = superimpose($pdb_1,$pdb_2,$upper_fasta_name,$lower_fasta_name,$method);
+my ($upper_index,$lower_index,$upper_fasta,$lower_fasta,@str_pairs) = superimpose($pdb_1,$pdb_2,$upper_fasta_name,$lower_fasta_name,$out);
 my $length_ufasta = length($upper_fasta);
 my $length_lfasta = length($lower_fasta);
 prepare_to_leave();
 
 sub linearize{
     my $dssp_file = $_[0];
-	my $index = $_[1];
-    my $switch = "off";
+	my $index     = $_[1];
+    my $switch    = "off";
     open DSSP, "$dssp_file" or die "$! $dssp_file\n";
     while (my $line = <DSSP>){
         if ($line =~ /^\s+\#/){
@@ -81,13 +79,15 @@ sub linearize{
         }
         elsif ($switch eq "on"){
             $line =~/^(.....)(.....)(..)(..)..(.).*/;
-			my $pos = $2 -1  ;
-            my $chain = $3;
-            my $aa = $4;
-            my $ss = $5;
-            $aa =~ s/\s+//g;
-            $ss =~ s/\s+/X/;
-			$dssp[$index][$pos] = $SS{$ss}; 
+			if($2 > 1){
+				my $pos = $2 -1  ;
+            	my $chain = $3;
+            	my $aa = $4;
+            	my $ss = $5;
+            	$aa =~ s/\s+//g;
+            	$ss =~ s/\s+/X/;
+				$dssp[$index][$pos] = $SS{$ss}; 
+			}
         }
     }
 }
@@ -102,7 +102,7 @@ sub superimpose{
 	my $pdb_2 = $_[1];
 	my $upper_fasta_name = $_[2]; 
 	my $lower_fasta_name = $_[3];
-	my $method = $_[4];
+	my $out = $_[4];
 	my $superimp  = "$pdb_1-$pdb_2"; 
 	my $superimpr = "$pdb_2-$pdb_1";
 	my $tm_score_s;
@@ -116,13 +116,11 @@ sub superimpose{
 	my ($fasta_1,$chain_1) = fasta_from_pdb($pdb_1); 
 	my ($fasta_2,$chain_2) = fasta_from_pdb($pdb_2);
 
-	if($method eq "click"){
-		system("$path_to_click/click $pdb_1 $pdb_2 > t.temp ");
-		$tm_score_s = quality_check($superimp,$chain_2,$chain_1);
+	system("$path_to_click/click $pdb_1 $pdb_2 > t.temp ");
+	$tm_score_s = quality_check($superimp,$chain_2,$chain_1);
 
-		system("$path_to_click/click $pdb_2 $pdb_1 > t.temp ");
-		$tm_score_r = quality_check($superimpr,$chain_2,$chain_1);
-	}
+	system("$path_to_click/click $pdb_2 $pdb_1 > t.temp ");
+	$tm_score_r = quality_check($superimpr,$chain_2,$chain_1);
 
 	my ($pairsr,$pairs) ;
 	if ($tm_score_s > $tm_score_r){
@@ -139,10 +137,10 @@ sub superimpose{
 		push @all_pairs, @pairsr;
 	}
 
-	@all_pairs = uniq @all_pairs;
+	@all_pairs  = uniq @all_pairs;
 	my @rlines  = gap_extension(@all_pairs);
-	my @lines = dobles(@rlines);
-	@lines = sort {$a <=> $b} @lines ;
+	my @lines   = dobles(@rlines);
+	@lines      = sort {$a <=> $b} @lines ;
 
 	my ($Lower_line,$Upper_line);
 	foreach  my $line (@lines){
@@ -150,7 +148,8 @@ sub superimpose{
 		$Upper_line .= "$COL[0]\n";
 		$Lower_line .= "$COL[1]\n";
 	}
-	my ($tempname1,$tempname2,$upper_index,$lower_index) = subdivide($Lower_line,$Upper_line,$fasta_1,$fasta_2,$upper_fasta_name,$lower_fasta_name);
+
+	my ($tempname1,$tempname2,$upper_index,$lower_index) = subdivide($Lower_line,$Upper_line,$fasta_1,$fasta_2,$upper_fasta_name,$lower_fasta_name,$out);
 	return($upper_index,$lower_index,$fasta_1,$fasta_2,@all_pairs);
 }
 
@@ -240,20 +239,21 @@ sub dobles{
 }
 
 sub subdivide{
-	my $lower_line = $_[0]; my @Lower_line = split (/\n/,$lower_line);
-	my $upper_line = $_[1]; my @Upper_line = split (/\n/,$upper_line);
-	my $upper_fasta = $_[2]; 
-	my $lower_fasta = $_[3];
+	my $lower_line       = $_[0]; my @Lower_line = split (/\n/,$lower_line);
+	my $upper_line       = $_[1]; my @Upper_line = split (/\n/,$upper_line);
+	my $upper_fasta      = $_[2]; 
+	my $lower_fasta      = $_[3];
 	my $upper_fasta_name = $_[4]; 
 	my $lower_fasta_name = $_[5];
+	my $out              = $_[6];
 	my (@upper_fragment,@lower_fragment);
 	my $tracker = 1;
 	my $anterior ;
 	my $upper_coords = "$upper_fasta_name\t";
 	my $lower_coords = "$lower_fasta_name\t";
 	for (my $i = 0 ; $i <= $#Lower_line  ; $i ++ ){
-		my ($l_st,$l_end) = split (/:/,$Lower_line[$i]) ;
-		my ($u_st,$u_end) = split (/:/,$Upper_line[$i]) ;
+		my ($l_st,$l_end)         = split (/:/,$Lower_line[$i]) ;
+		my ($u_st,$u_end)         = split (/:/,$Upper_line[$i]) ;
 		my ($l_st_nxt,$l_end_nxt) = split (/:/,$Lower_line[$i+1]);
 		my ($u_st_nxt,$u_end_nxt) = split (/:/,$Upper_line[$i+1]);
 		my $gap_u = $l_st_nxt - $l_end -1;
@@ -323,10 +323,10 @@ sub subdivide{
 	$lower_coords =~ /.*(.)\.pdb/; my $chain_2 = $1;$lower_coords =~ s/\.pdb/\t$chain_2/;
 	open OCOORD, ">$upper_fasta_name-$lower_fasta_name.coord.txt";
 	print OCOORD "$upper_coords\n$lower_coords\n";
-
+	open OUTFILE, ">>$out";
 	my $total_fragments = $#lower_fragment +1 ;
 	my (@upper_bs,@lower_bs);
-	my ($O1,$O2,$O3,$O4,$O5);
+	my ($O1,$O2,$O3,$O4,$O5,$ulf,$llf,$ident);
 	for (my $j = 0 ; $j < $total_fragments ; $j ++){
 		my @current_ufragment = split (/\n/,$upper_fragment[$j]);
 		@current_ufragment = uniq @current_ufragment;
@@ -335,22 +335,35 @@ sub subdivide{
 		@current_lfragment = uniq @current_lfragment;
 		my $current_l = join "\n", @current_lfragment;
 
-		my ($upper_bi,$upper_bf,$lower_bi,$lower_bf,$o1,$o2,$o3,$o4,$o5) = align($current_l,$current_u,$upper_fasta,$lower_fasta,$upper_fasta_name,$lower_fasta_name);
+		my ($upper_bi,$upper_bf,$lower_bi,$lower_bf,$o1,$o2,$o3,$o4,$o5,$upper_local_fasta,$lower_local_fasta) = align($current_l,$current_u,$upper_fasta,$lower_fasta,$upper_fasta_name,$lower_fasta_name);
 		$O1 .= $o1;
 		$O2 .= $o2;
 		$O3 .= $o3;
 		$O4 .= $o4;
 		$O5 .= $o5;
+		$ulf .= $upper_local_fasta;
+		$llf .= $lower_local_fasta;
 		if ($upper_bi =~ /\S+/){push @upper_bs, $upper_bi}
 		if ($upper_bf =~ /\S+/){push @upper_bs, $upper_bf}
 		if ($lower_bi =~ /\S+/){push @lower_bs, $lower_bi}
 		if ($lower_bf =~ /\S+/){push @lower_bs, $lower_bf}
 	}
-	print "  query SS  |$O1\n  query     |$O2\n            |$O3\n  target    |$O4\n  target SS |$O5\n\n";
+	my @ulf = split(//,$ulf);
+	my @llf = split(//,$llf);
+	my $total_aa;
+	for (my $k = 0 ; $k <= $#ulf ; $k ++){
+		if ($ulf[$k] eq $llf[$k]){$ident ++}
+		if ($ulf[$k] =~ /\w/ and $llf[$k] =~ /\w/){ $total_aa ++}
+	}
+
+	$ident = $ident /$total_aa * 100 ;
+	$ident = sprintf "%.3g", $ident;
+	print "\t$ident";
+	print OUTFILE "  query SS    $O1\n  query      |$O2\n             |$O3\n  target     |$O4\n  target SS   $O5\n\n";
 	my @upper_fasta = split (//,$upper_fasta);
 	my @lower_fasta = split (//,$lower_fasta);
-	@upper_bs = sort {$a <=> $b} @upper_bs;
-	@lower_bs = sort {$a <=> $b} @lower_bs;
+	@upper_bs       = sort {$a <=> $b} @upper_bs;
+	@lower_bs       = sort {$a <=> $b} @lower_bs;
 
 	my $uf = join('',@upper_fasta[$upper_bs[0]-1..$upper_bs[$#upper_bs]-1]);
 	my $lf = join('',@lower_fasta[$lower_bs[0]-1..$lower_bs[$#lower_bs]-1]);
@@ -423,9 +436,9 @@ sub align{
 	push @lower_bs, $llast;
 	
 	my $line_SS_query;
-	my $line_upper_fasta;
+	my ($line_upper_fasta,$upper_local_fasta);
 	my $line_tics;
-	my $line_lower_fasta;
+	my ($line_lower_fasta,$lower_local_fasta);
 	my $line_SS_target;
 
 	if ($u1 =~ /\S+/){
@@ -435,23 +448,21 @@ sub align{
 			my $lower_dssp;
 			$upper_fasta_name =~ s/\.pdb$//;
 			$lower_fasta_name =~ s/\.pdb$//;
-			#$line_SS_query  .= sprintf '%10s',"SS_query";
 			$line_SS_query .= sprintf '%6s';
 			for (my $i = $u1-1 ; $i < $ulast ; $i ++){
 				$line_SS_query .= "$UPPER[1][$i]$dssp[1][$i]";
 				$upper_dssp .= "$UPPER[1][$i]$dssp[1][$i]";
 			}
 
-			$line_SS_query .= sprintf '%+9s', "|";
-			#$line_upper_fasta .= sprintf '%10s', "$upper_fasta_name"  ;
+			$line_SS_query .= sprintf '%+7s';
     		$line_upper_fasta .= sprintf '%6s', " $u1 ";
 	        for (my $i = $u1-1 ; $i < $ulast ; $i ++){
 				$line_upper_fasta .= "$UPPER[1][$i]$UPPER[0][$i]";
+				$upper_local_fasta .= "$UPPER[1][$i]$UPPER[0][$i]";
 			}
 			$line_upper_fasta .= sprintf '%+6s', " $ulast ";
 
-			$line_upper_fasta .= sprintf '%+3s' , "|";
-			#$line_tics .= sprintf '%10s',"";
+			$line_upper_fasta .= sprintf '%+1s' , "|";
 			$line_tics .= sprintf '%6s';
 			for (my $i = $l1-1 ; $i < $llast ; $i ++){
 				$lower_dssp .= "$LOWER[1][ $i]$dssp[2][$i]";
@@ -469,35 +480,27 @@ sub align{
 				}
 			}
 
-			$line_tics .= sprintf '%+9s', "|";
-			#$line_lower_fasta .= sprintf '%10s', $lower_fasta_name  ;
+			$line_tics .= sprintf '%+7s', "|";
 	       	$line_lower_fasta .= sprintf '%6s'," $l1 ";
     	   	for (my $i = $l1-1 ; $i < $llast ; $i ++){
 				$line_lower_fasta .= "$LOWER[1][ $i]$LOWER[0][$i]";
+				$lower_local_fasta .= "$LOWER[1][ $i]$LOWER[0][$i]";
 			}
 			$line_lower_fasta .= sprintf '%+6s', " $llast ";	
-			$line_lower_fasta .= sprintf '%+3s', "|";
-			#$line_SS_target .= sprintf '%10s', "SS_target";
+			$line_lower_fasta .= sprintf '%+1s', "|";
 			$line_SS_target .= sprintf '%6s';
 			$line_SS_target .= "$lower_dssp";			
-			$line_SS_target .= sprintf '%+9s', "|";
+			$line_SS_target .= sprintf '%+7s';
 		}
 	}
-
-	#print "$line_SS_query\n";
-	#print "$line_upper_fasta\n";
-	#print "$line_tics\n";
-	#print "$line_lower_fasta\n";
-	#print "$line_SS_target\n\n";
-
-
 	@upper_bs = sort {$a <=> $b} @upper_bs;
 	@lower_bs = sort {$a <=> $b} @lower_bs;
 	my $upper_bi = $upper_bs[0];
 	my $upper_bf = $upper_bs[$#upper_bs];
 	my $lower_bi = $lower_bs[0];
 	my $lower_bf = $lower_bs[$#lower_bs];
-	return($upper_bi,$upper_bf,$lower_bi,$lower_bf,$line_SS_query,$line_upper_fasta,$line_tics,$line_lower_fasta,$line_SS_target);
+	#print STDERR "\n$upper_local_fasta\n$lower_local_fasta\n";
+	return($upper_bi,$upper_bf,$lower_bi,$lower_bf,$line_SS_query,$line_upper_fasta,$line_tics,$line_lower_fasta,$line_SS_target,$upper_local_fasta,$lower_local_fasta);
 }
 
 
