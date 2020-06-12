@@ -28,7 +28,7 @@ my $min         = 1    ; # -min   minimum number of secondary structural element
 my $max         = 5    ; # -max   maximum number of secondary structural elements in the initial fragmentation (antes 7)
 my $divider     = 4    ; #        number of times the total number of secondary structural elements are going to be divided to determine the initial fragmentation
 my $rounds      = 15   ; # -i     maximum number of iterations
-my $eval        = 2    ; #        minimum number of sequential elements to be incorporated as a diagonal
+my $eval        = 3    ; #        minimum number of sequential elements to be incorporated as a diagonal
 my $reward      = 2    ; # -ext   rewarding points for a diagonal extension
 my $overlap     = 75   ; # -o     minimal Structure Overlap Score on the last click evaluation
 my $coverage    = 75   ; # -n     minimal percentage of overlapped atoms of the shortest chain over the longest chain compared 
@@ -229,8 +229,24 @@ sub prepare_pdb{
 	
 	open IN, "$infile" or die "\n$!";
 	open OUT, ">$outfile";
+	my $aa_seqres_nb = 0;
+
 	while (my $line = <IN>){
 		if($line =~ /^REMARK RES/){print OUT $line}
+		if ($line =~ /^SEQRES\s+\S+\s+(\S+)\s+\S+\s+(.*)/){
+			#print STDERR "$1 $2";
+			my $seqres_chain = $1;
+			my @seqres_seq   = split (" ",$2);
+			if ($chain eq $seqres_chain){
+				foreach my $aa_seqres (@seqres_seq){
+					$aa_seqres_nb ++;
+					print  OUT "REMARK RES $aa_seqres A";
+					printf OUT "%5s", $aa_seqres_nb;
+					print  OUT "\n";
+				}
+			}
+		}
+
 		if($line =~ /^ATOM\s+/){
 			$line =~ /(^ATOM.)(......)(.....)(....)(..)(.*)/;
 			my $head = $1 ;
