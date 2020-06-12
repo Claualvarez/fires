@@ -78,16 +78,16 @@ sub linearize{
             $switch = "on";
         }
         elsif ($switch eq "on"){
-            $line =~/^(.....)(.....)(..)(..)..(.).*/;
-			if($2 > 1){
-				my $pos = $2 -1  ;
-            	my $chain = $3;
-            	my $aa = $4;
-            	my $ss = $5;
-            	$aa =~ s/\s+//g;
-            	$ss =~ s/\s+/X/;
-				$dssp[$index][$pos] = $SS{$ss}; 
-			}
+        	$line =~/^(.....)(.....)(..)(..)..(.).*/;
+		if($2 > 1){
+			my $pos = $2 -1  ;
+            		my $chain = $3;
+            		my $aa = $4;
+            		my $ss = $5;
+            		$aa =~ s/\s+//g;
+            		$ss =~ s/\s+/X/;
+			$dssp[$index][$pos] = $SS{$ss}; 
+		}
         }
     }
 }
