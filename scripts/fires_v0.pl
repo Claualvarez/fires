@@ -228,35 +228,30 @@ sub prepare_pdb{
 	my $flag = 0;
 	
 	open IN, "$infile" or die "\n$!";
-	open OUT, ">$outfile";
-	my $aa_seqres_nb = 0;
+	open OUT, ">tempoutfile";
+	open TMPR, ">tempremarks";
+	my $remark_res_token = 0;
+	my $new_aa_pos = 0;
 
 	while (my $line = <IN>){
-		if($line =~ /^REMARK RES/){print OUT $line}
-		if ($line =~ /^SEQRES\s+\S+\s+(\S+)\s+\S+\s+(.*)/){
-			#print STDERR "$1 $2";
-			my $seqres_chain = $1;
-			my @seqres_seq   = split (" ",$2);
-			if ($chain eq $seqres_chain){
-				foreach my $aa_seqres (@seqres_seq){
-					$aa_seqres_nb ++;
-					print  OUT "REMARK RES $aa_seqres A";
-					printf OUT "%5s", $aa_seqres_nb;
-					print  OUT "\n";
-				}
-			}
-		}
-
+		if($line =~ /^REMARK RES/){$remark_res_token ++;print OUT $line}
 		if($line =~ /^ATOM\s+/){
-			$line =~ /(^ATOM.)(......)(.....)(....)(..)(.*)/;
+			$line =~ /(^ATOM.)(......)(.....)(....)(..)(....)(.*)/;
 			my $head = $1 ;
 			my $nb   = $2 ;
 			my $atm  = $3 ;
 			my $aa   = $4 ; 
-			my $c    = $5 ;	
-			my $inf  = $6 ;
+			my $c    = $5 ;
+			my $aa_pos = $6;
+			my $inf  = $7 ;
 			$c =~ s/ //g;
-
+			if ($c eq $chain and $atm =~ /\s+N\s+/){
+				$new_aa_pos ++;
+				if ($remark_res_token < 1) {open TMPR, ">>tempremarks";} 
+				print  TMPR "REMARK RES$aa A";
+				printf TMPR "%5s", $new_aa_pos;
+				print  TMPR "\n";
+			}
 			if ($c eq $chain and $flag == 0){
 				$flag ++;	
 				$number = $nb ;
@@ -268,6 +263,7 @@ sub prepare_pdb{
 					printf OUT '%6s',$number;
 					print  OUT "$atm $aa";
 					printf OUT '%2s', "A";
+					printf  OUT "%4s", $new_aa_pos;
 					print  OUT "$inf\n";
 					$number ++;
 				}elsif($aa =~ /^\s/){
@@ -275,44 +271,58 @@ sub prepare_pdb{
 					printf OUT '%6s',$number;
 					print  OUT "$atm$aa";
 					printf OUT '%2s', "A";
+					printf  OUT "%4s", $new_aa_pos;
 					print  OUT "$inf\n";
 					$number ++
 				}
 			}
 
 		}elsif($line =~ /^HETATM/){
-			$line =~ /(^HETATM)(.....)(.....)(....)(..)(.*)/;
-            		my $head = $1 ;
-            		my $nb   = $2 ;
-            		my $atm  = $3 ;
-            		my $aa   = $4 ;
-            		my $c    = $5 ;
-            		my $inf  = $6 ;
-            		$c =~ s/ //g;
-            		if ($c eq $chain and $flag == 0){
-                		$flag ++;
-                		$number = $nb ;
-            		}
-            		if ($c eq $chain){
-                		if ($aa =~ /^A/){	
-                    			$aa =~ s/^A//;
-                    			print  OUT  "ATOM  ";
-                    			printf OUT '%5s',$number;
-                    			print  OUT "$atm $aa";
-                    			printf OUT '%2s', "A";
-                    			print  OUT "$inf\n";
-                    			$number ++;
-                		}elsif($aa =~ /^\s/){
-                    			print  OUT "ATOM  ";
-                    			printf OUT '%5s',$number;
-                    			print  OUT "$atm$aa";
-                    			printf OUT '%2s', "A";
-                    			print  OUT "$inf\n";
-                    			$number ++;
+			$line =~ /(^HETATM)(.....)(.....)(....)(..)(....)(.*)/;
+            my $head = $1 ;
+    		my $nb   = $2 ;
+    		my $atm  = $3 ;
+            my $aa   = $4 ;
+            my $c    = $5 ;
+			my $aa_pos = $6;
+            my $inf  = $7 ;
+            $c =~ s/ //g;
+			if ($c eq $chain and $atm =~ /\s+N\s+/){
+				$new_aa_pos ++;
+				close TMPR;
+				if ($remark_res_token < 1) {open TMPR, ">>tempremarks";} 
+				print  TMPR "REMARK RES$aa A";
+				printf TMPR "%5s", $new_aa_pos;
+				print  TMPR "\n";	
+			}
+
+            if ($c eq $chain and $flag == 0){
+                $flag ++;
+                $number = $nb ;
+            }
+            if ($c eq $chain){
+                if ($aa =~ /^A/){	
+                    $aa =~ s/^A//;
+                    print  OUT  "ATOM  ";
+                    printf OUT '%5s',$number;
+                    print  OUT "$atm $aa";
+                    printf OUT '%2s', "A";
+					printf  OUT '%4s', $new_aa_pos;
+                    print  OUT "$inf\n";
+                    $number ++;
+            	}elsif($aa =~ /^\s/){
+                    print  OUT "ATOM  ";
+                    printf OUT '%5s',$number;
+                    print  OUT "$atm$aa";
+                    printf OUT '%2s', "A";
+					printf  OUT "%4s", $new_aa_pos;
+                    print  OUT "$inf\n";
+                    $number ++;
 				}
-            		}
-		}
+            }
+		}elsif($flag > 0 and $line =~ /^TER/){last}
 	}
+	system ("cat tempremarks tempoutfile >  $outfile");
 	close OUT ;
 	system("$path_to_dssp/dssp $outfile > $dssp");
 }
