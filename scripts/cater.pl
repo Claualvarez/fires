@@ -24,7 +24,7 @@ if ($options =~ / -ch\s+(\S+) /)   {$chain_name    = $1}
 if ($options =~ / -pdb\s+(\S+) /)  {$pdb    = $1}
 if ($options =~ / -out\s+(\S+) /)  {$outname    = $1}
 if ($options =~ / -path\s+(\S+) /) {$path_to_fires    = $1}
-if ($options =~ / -click\s+(\S+) /) {$path_to_click    = $1}
+if ($options =~ / -click\s+(\S+) /){$path_to_click    = $1}
 
 chomp $infile;
 my $dssp_name = "$pdb.dssp";
@@ -34,7 +34,7 @@ my ($number,$nb) = 0;
 while (my $line = <IN> ){
 	if ($line =~ /^([0-9]+)\..*Query: \[(.*)\].*:(.*)/){
 		if(-f "temp_ali" ){
-			print "\n  Structure-derived pairwise sequence alignment of Query [ $range ] and Pairs$pairs\n";
+			print "\n  Structure-derived pairwise sequence alignment of Query [ $range ] and Pairs$pairs\n\n";
 			system("cat temp_ali "); system ("rm temp_ali")
 		}
 		print "\n$line";
@@ -63,8 +63,9 @@ while (my $line = <IN> ){
 
 		print OUT "TERM\n";
 	}
-	if ($line =~ /^\s+Query/){print "$line"}
+	if ($line =~ /^\s+Query/){chomp $line; print "$line\t%Ident\n"}
 	if ($line =~ /^\s+[0-9]+-[0-9]+/){
+		chomp $line;
 		print "$line";
 		$number ++;
 		my @LINE = split (" ",$line);
@@ -84,7 +85,8 @@ while (my $line = <IN> ){
 			}
 		}
 		print OUT "TERM\n";
-		system("perl $path_to_fires/str-base-msa_v-1.pl query.pdb target.pdb -path $path_to_click -dssp1 $dssp_name -dssp2 $dssp_name >> temp_ali");
+		system("perl $path_to_fires/str-base-msa_v-1.pl query.pdb target.pdb -path $path_to_click -dssp1 $dssp_name -dssp2 $dssp_name -o temp_ali");
+		print "\n";
 	}
 
 }
