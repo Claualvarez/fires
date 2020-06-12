@@ -27,7 +27,7 @@ if ($options =~ / -path\s+(\S+) /) {$path_to_fires    = $1}
 if ($options =~ / -click\s+(\S+) /) {$path_to_click    = $1}
 
 chomp $infile;
-my $dssp_name = "$pdb\_$chain_name.dssp";
+my $dssp_name = "$pdb.dssp";
 
 open IN, "$infile" or die "$infile \n$!" ;
 my ($number,$nb) = 0;
