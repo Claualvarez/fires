@@ -322,7 +322,9 @@ sub prepare_pdb{
             }
 		}elsif($flag > 0 and $line =~ /^TER/){last}
 	}
-	system ("cat tempremarks tempoutfile >  $outfile");
+	if ($remark_res_token){system ("cat tempremarks  >  $outfile")}
+	system ("cat  tempoutfile >  $outfile");
+
 	close OUT ;
 	system("$path_to_dssp/dssp $outfile > $dssp");
 }
