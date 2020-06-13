@@ -264,7 +264,7 @@ sub prepare_pdb{
 					printf OUT '%6s',$number;
 					print  OUT "$atm $aa";
 					printf OUT '%2s', "A";
-					printf  OUT "%4s", $new_aa_pos;
+					printf  OUT "%4s", $aa_pos;
 					print  OUT "$inf\n";
 					$number ++;
 				}elsif($aa =~ /^\s/){
@@ -272,7 +272,7 @@ sub prepare_pdb{
 					printf OUT '%6s',$number;
 					print  OUT "$atm$aa";
 					printf OUT '%2s', "A";
-					printf  OUT "%4s", $new_aa_pos;
+					printf  OUT "%4s", $aa_pos;
 					print  OUT "$inf\n";
 					$number ++
 				}
@@ -317,7 +317,7 @@ sub prepare_pdb{
                     printf OUT '%5s',$number;
                     print  OUT "$atm$aa";
                     printf OUT '%2s', "A";
-					printf  OUT "%4s", $new_aa_pos;
+					printf  OUT "%4s", $aa_pos;
                     print  OUT "$inf\n";
                     $number ++;
 				}
