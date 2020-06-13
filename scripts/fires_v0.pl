@@ -257,6 +257,7 @@ sub prepare_pdb{
 				$number = $nb ;
 			}
 			if ($c eq $chain){
+				if ($remark_res_token < 1) {$aa_pos = $new_aa_pos}
 				if ($aa =~ /^A/){
 					$aa =~ s/^A//;
 					print  OUT  "$head";
@@ -301,13 +302,14 @@ sub prepare_pdb{
                 $number = $nb ;
             }
             if ($c eq $chain){
+				if ($remark_res_token < 1) {$aa_pos = $new_aa_pos}
                 if ($aa =~ /^A/){	
                     $aa =~ s/^A//;
                     print  OUT  "ATOM  ";
                     printf OUT '%5s',$number;
                     print  OUT "$atm $aa";
                     printf OUT '%2s', "A";
-					printf  OUT '%4s', $new_aa_pos;
+					printf  OUT '%4s', $aa_pos;
                     print  OUT "$inf\n";
                     $number ++;
             	}elsif($aa =~ /^\s/){
@@ -324,7 +326,6 @@ sub prepare_pdb{
 	}
 	if ($remark_res_token){system ("cat tempremarks  >  $outfile")}
 	system ("cat  tempoutfile >  $outfile");
-
 	close OUT ;
 	system("$path_to_dssp/dssp $outfile > $dssp");
 }
